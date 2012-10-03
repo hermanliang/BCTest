@@ -24,7 +24,8 @@ namespace BarcodeGenerator
                             8,
                             9,
                             10,
-                            24
+                            24,
+                            32
                         };
         
         private string[] sizeText = { 
@@ -38,7 +39,8 @@ namespace BarcodeGenerator
                                 "8 (0-255)",
                                 "9 (0-511)",
                                 "10 (0-1023)",
-                                "24 (4英數字)"
+                                "24 (4英數字)",
+                                "32 (浮點數)"
                             };
 
         Dictionary<string, int> sizeTable = new Dictionary<string, int>();
@@ -102,39 +104,56 @@ namespace BarcodeGenerator
                 else
                 {
                     size.Add(index);
-                    if (index != 24)
+                    switch (index)
                     {
-                        if (int.TryParse(value, out v))
-                        {
-                            data.Add(v);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error");
-                            return;
-                        }
-                    }
-                    else if (index == 24)
-                    {
-                        if (value.Length > 4)
-                        {
-                            MessageBox.Show("Error");
-                            return;
-                        }
-                        int textIdx;
-                        for (int j = 0; j < value.Length; j++)
-                        {
-                            if (textTable.TryGetValue(value[j], out textIdx))
+                        case 24:
+                            if (value.Length > 4)
                             {
-                                v = v | (textIdx << j * 6);
+                                MessageBox.Show("Error");
+                                return;
+                            }
+                            int textIdx;
+                            for (int j = 0; j < value.Length; j++)
+                            {
+                                if (textTable.TryGetValue(value[j], out textIdx))
+                                {
+                                    v = v | (textIdx << j * 6);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Error");
+                                    return;
+                                }
+                            }
+                            data.Add(v);
+
+                            break;
+
+                        case 32:
+                            float f1;
+                            if (!float.TryParse(value, out f1))
+                            {
+                                MessageBox.Show("Error");
+                                return;
+                            }
+                            byte[] fByte = BitConverter.GetBytes(f1);
+                            v = BitConverter.ToInt32(fByte, 0);                          
+
+                            data.Add(v);
+                            break;
+
+                        default:
+                            if (int.TryParse(value, out v))
+                            {
+                                data.Add(v);
                             }
                             else
                             {
                                 MessageBox.Show("Error");
                                 return;
                             }
-                        }
-                        data.Add(v);
+
+                            break;
                     }
                 }
             }
@@ -175,6 +194,12 @@ namespace BarcodeGenerator
                         word += BarcodeCore.numberText[idx];                        
                     }
                     decodeValue += word + "\r\n";
+                }
+                else if (deFormat[i] == 32)
+                {
+                    byte[] iByte = BitConverter.GetBytes(deValues[i]);
+                    float f2 = BitConverter.ToSingle(iByte, 0);
+                    decodeValue += f2.ToString() + "\r\n";
                 }
                 else
                 {
@@ -344,5 +369,8 @@ namespace BarcodeGenerator
                 }
             }
         }
+
+
+
     }
 }
