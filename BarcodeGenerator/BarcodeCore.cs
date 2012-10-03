@@ -175,8 +175,62 @@ namespace BarcodeGenerator
 
         }
 
+        public static List<int[]> getFormatData(int[] bit)
+        {
+            List<int[]> format = new List<int[]>();
+            List<int> singleBlock = new List<int>();
+            int singleBlockSum = 0;
+
+            for (int i = 0; i < bit.Length; i++)
+            {
+                singleBlockSum += bit[i];
+                if (singleBlockSum > 32)
+                {
+                    int dev = singleBlockSum - 32;
+                    int last = bit[i] - dev;
+                    singleBlock.Add(last);
+                    format.Add(singleBlock.ToArray());
+                    singleBlock.Clear();
+                    singleBlock.Add(dev);
+                    singleBlockSum = dev;
+                }
+                else if (singleBlockSum == 32)
+                {   
+                    singleBlock.Add(bit[i]);
+                    format.Add(singleBlock.ToArray());
+                    singleBlock.Clear();
+                    singleBlock.Add(0);
+                    singleBlockSum = 0;
+                }
+                else
+                {
+                    singleBlock.Add(bit[i]);
+                }
+            }
+            singleBlockSum += 8;
+            if (singleBlockSum > 32)
+            {
+                int dev = singleBlockSum - 32;
+                int last = 8 - dev;
+                singleBlock.Add(last);
+                format.Add(singleBlock.ToArray());
+
+                singleBlock.Clear();
+                singleBlock.Add(dev);
+                format.Add(singleBlock.ToArray());
+            }
+            else
+            {
+                singleBlock.Add(8);
+                format.Add(singleBlock.ToArray());
+                singleBlock.Clear();
+            }
+            return format;
+        }
+
         public static bool validValue(int value, int bit)
         {
+            
             if (value > Math.Pow(2, bit) - 1)
             {
                 return false;

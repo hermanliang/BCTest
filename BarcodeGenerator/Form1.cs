@@ -202,6 +202,22 @@ namespace BarcodeGenerator
                     sw.Flush();
                     sw.Close();
                 }
+
+                string fname = saveFileDialog1.FileName.Split(new string[] { ".txt" }, StringSplitOptions.RemoveEmptyEntries)[0] + "_format.txt";
+                using (StreamWriter sw = new StreamWriter(fname, false, Encoding.UTF8))
+                {
+                    List<int[]> format = BarcodeCore.getFormatData(getAllBits());
+                    foreach (int[] singleBlock in format)
+                    {
+                        foreach (int bit in singleBlock)
+                        {
+                            sw.Write(bit.ToString() + "\t");
+                        }
+                        sw.Write("\r\n");
+                    }
+                    sw.Flush();
+                    sw.Close();
+                }
                 
             }
         }
@@ -222,6 +238,108 @@ namespace BarcodeGenerator
                             break;
                         rows.Add(new object[] {format[0], format[1] });
                     }
+
+                }
+            }
+        }
+
+        private int[] getAllBits()
+        {   
+            List<int> size = new List<int>();
+
+            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            {   
+                string text;
+                try
+                {
+                    text = dataGridView1[1, i].Value.ToString();                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return null;
+                }
+                int v = 0;
+                int index;
+                if (!sizeTable.TryGetValue(text, out index))
+                {
+                    MessageBox.Show("Error");
+                    return null;
+                }
+                else
+                {
+                    size.Add(index);
+                }
+            }
+            return size.ToArray();
+        }
+
+        private void btnDecode_Click(object sender, EventArgs e)
+        {
+            string barcodes = txBarcode.Text;
+            if (barcodes.Length % 10 != 0)
+            {
+                MessageBox.Show("Error");
+                return;
+            }
+
+            List<string> bc = new List<string>();
+            for (int i = 0; i < barcodes.Length / 10; i++)
+            {
+                bc.Add(barcodes.Substring(i * 10, 10));
+            }
+            txBarcode.Text = null;
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamReader sr = new StreamReader(openFileDialog1.FileName, Encoding.UTF8))
+                {
+                    List<int> singleBlock = new List<int>();
+                    List<int[]> dataFormat = new List<int[]>();
+                    while (!sr.EndOfStream)
+                    {
+                        string text = sr.ReadLine();
+                        string[] format = text.Split(new char[]{'\t'},StringSplitOptions.RemoveEmptyEntries);
+                        foreach (string bit in format)
+                        {
+                            singleBlock.Add(int.Parse(bit));
+                        }
+                        dataFormat.Add(singleBlock.ToArray());
+                        singleBlock.Clear();                        
+                    }
+
+                    int[] deValues, deFormat;
+                    BarcodeCore.BarcodeDecoder(bc, dataFormat, out deValues, out deFormat);
+                    if (deValues == null)
+                    {
+                        MessageBox.Show("Error");
+                        return;
+                    }
+
+                    string decodeValue = "Barcodes:\r\n";
+                    foreach (string barcode in bc)
+                    {
+                        decodeValue += barcode + "\r\n";
+                    }
+                    decodeValue += "\r\nDecode Data:\r\n";
+                    for (int i = 0; i < deValues.Length; i++)
+                    {
+                        if (deFormat[i] == 24)
+                        {
+                            string word = "";
+                            int mask = 0x3F;
+                            for (int j = 0; j < 4; j++)
+                            {
+                                int idx = (deValues[i] >> 6 * j) & mask;
+                                word += BarcodeCore.numberText[idx];
+                            }
+                            decodeValue += word + "\r\n";
+                        }
+                        else
+                        {
+                            decodeValue += deValues[i].ToString() + "\r\n";
+                        }
+                    }
+                    txInfo.Text = decodeValue;
 
                 }
             }

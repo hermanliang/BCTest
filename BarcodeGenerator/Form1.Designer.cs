@@ -32,20 +32,22 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnGen = new System.Windows.Forms.Button();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txInfo = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.txInfo = new System.Windows.Forms.TextBox();
+            this.txBarcode = new System.Windows.Forms.TextBox();
+            this.btnDecode = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -57,6 +59,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnDecode);
+            this.splitContainer1.Panel1.Controls.Add(this.txBarcode);
             this.splitContainer1.Panel1.Controls.Add(this.btnLoad);
             this.splitContainer1.Panel1.Controls.Add(this.btnSave);
             this.splitContainer1.Panel1.Controls.Add(this.btnGen);
@@ -71,7 +75,7 @@
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(508, 12);
+            this.btnLoad.Location = new System.Drawing.Point(507, 12);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 2;
@@ -81,7 +85,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(427, 12);
+            this.btnSave.Location = new System.Drawing.Point(420, 12);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -98,25 +102,6 @@
             this.btnGen.Text = "Generate";
             this.btnGen.UseVisualStyleBackColor = true;
             this.btnGen.Click += new System.EventHandler(this.btnGen_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(363, 289);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "TXT(*.txt)|*.txt";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.Filter = "TXT(*.txt)|*.txt";
             // 
             // splitContainer2
             // 
@@ -137,6 +122,17 @@
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(363, 289);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // txInfo
             // 
             this.txInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -149,6 +145,31 @@
             this.txInfo.Size = new System.Drawing.Size(231, 289);
             this.txInfo.TabIndex = 1;
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "TXT(*.txt)|*.txt";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "TXT(*.txt)|*.txt";
+            // 
+            // txBarcode
+            // 
+            this.txBarcode.Location = new System.Drawing.Point(99, 12);
+            this.txBarcode.Name = "txBarcode";
+            this.txBarcode.Size = new System.Drawing.Size(228, 22);
+            this.txBarcode.TabIndex = 3;
+            // 
+            // btnDecode
+            // 
+            this.btnDecode.Location = new System.Drawing.Point(333, 12);
+            this.btnDecode.Name = "btnDecode";
+            this.btnDecode.Size = new System.Drawing.Size(75, 23);
+            this.btnDecode.TabIndex = 4;
+            this.btnDecode.Text = "Decode";
+            this.btnDecode.UseVisualStyleBackColor = true;
+            this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -158,15 +179,16 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -182,6 +204,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox txInfo;
+        private System.Windows.Forms.Button btnDecode;
+        private System.Windows.Forms.TextBox txBarcode;
     }
 }
 
