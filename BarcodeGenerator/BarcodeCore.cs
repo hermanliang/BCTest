@@ -7,15 +7,15 @@ namespace BarcodeGenerator
 {
     public class BarcodeCore
     {
-        public static string numberText = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public static string numberText = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";        
 
-        public static void BarcodeEncoder(int[] bit, int[] values, out List<int[]> format, out List<string> barcodes)
-        {
+        public static void BarcodeEncoder(int[] bit, long[] values, out List<int[]> format, out List<string> barcodes)
+        {            
             format = new List<int[]>();
             barcodes = new List<string>();
             if (bit.Length != values.Length)
                 goto Exit;
-
+            
             int singleBlockSum = 0;
             long code = 0;
             List<int> singleBlock = new List<int>();
@@ -35,17 +35,17 @@ namespace BarcodeGenerator
                     singleBlock.Add(last);
                     format.Add(singleBlock.ToArray());
                     long mask = (long)Math.Pow(2, last) - 1;
-                    code = code | ((long)values[i] & mask) << (singleBlockSum - bit[i]);
+                    code = code | (values[i] & mask) << (singleBlockSum - bit[i]);
                     barcodes.Add(code.ToString("0000000000"));
                     code = 0;
-                    code = code | ((long)values[i] >> last);
+                    code = code | (values[i] >> last);
                     singleBlock.Clear();
                     singleBlock.Add(dev);
                     singleBlockSum = dev;
                 }
                 else if (singleBlockSum == 32)
                 {
-                    code = code | ((long)values[i] << (singleBlockSum - bit[i]));
+                    code = code | (values[i] << (singleBlockSum - bit[i]));
                     singleBlock.Add(bit[i]);
                     format.Add(singleBlock.ToArray());
                     singleBlock.Clear();
@@ -56,7 +56,7 @@ namespace BarcodeGenerator
                 }
                 else
                 {
-                    code = code | ((long)values[i] << (singleBlockSum - bit[i]));
+                    code = code | (values[i] << (singleBlockSum - bit[i]));
                     singleBlock.Add(bit[i]);
                 }
                 
@@ -110,7 +110,7 @@ namespace BarcodeGenerator
             List<int> f1 = new List<int>();
             int i, j;
             int singleBlockSum = 0;
-            int value = 0;
+            long value = 0;
             long mask;
             long code;
             long sum = 0;
@@ -130,28 +130,28 @@ namespace BarcodeGenerator
                     {
                         if (i != 0 && j == 0)
                         {
-                            int tempV = (int)((code >> (singleBlockSum - bit)) & mask);
+                            long tempV = (code >> (singleBlockSum - bit) & mask);
                             value = value | (tempV << last);
-                            v1.Add(value);
+                            v1.Add(BitConverter.ToInt32(BitConverter.GetBytes(value), 0));
                             f1.Add(bit + last);
                             sum += value;
                         }
                         else
                         {
                             value = (int)((code >> (singleBlockSum - bit)) & mask);
-                            v1.Add(value);
+                            v1.Add(BitConverter.ToInt32(BitConverter.GetBytes(value), 0));
                             f1.Add(bit);
                             sum += value;
                         }
                     }
                     else if (singleBlockSum == 32)
                     {
-                        value = (int)((code >> (singleBlockSum - bit)) & mask);
+                        value = (code >> (singleBlockSum - bit) & mask);
                         last = bit;
                         singleBlockSum = 0;
                         if (i == barcodes.Count - 1 && j == size.Length - 1)
                         {
-                            v1.Add(value);
+                            v1.Add(BitConverter.ToInt32(BitConverter.GetBytes(value), 0));
                             f1.Add(bit);
                             sum += value;
                         }                        
@@ -228,7 +228,7 @@ namespace BarcodeGenerator
             return format;
         }
 
-        public static bool validValue(int value, int bit)
+        public static bool validValue(long value, int bit)
         {
             
             if (value > Math.Pow(2, bit) - 1)

@@ -76,7 +76,7 @@ namespace BarcodeGenerator
 
         private void btnGen_Click(object sender, EventArgs e)
         {            
-            List<int> data = new List<int>();
+            List<long> data = new List<long>();
             List<int> size = new List<int>();
 
             for (int i = 0; i < dataGridView1.RowCount - 1; i++)
@@ -92,39 +92,41 @@ namespace BarcodeGenerator
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    txInfo.Text = null;
                     return;
                 }
-                int v = 0;
+                long v = 0;
                 int index;
                 if (!sizeTable.TryGetValue(text, out index))
                 {
-                    MessageBox.Show("Error");
-                    return;
+                    goto Exit;
                 }
                 else
                 {
                     size.Add(index);
+                    byte[] fByte;
                     switch (index)
                     {
                         case 24:
                             if (value.Length > 4)
                             {
-                                MessageBox.Show("Error");
-                                return;
+                                goto Exit;
                             }
                             int textIdx;
                             for (int j = 0; j < value.Length; j++)
                             {
                                 if (textTable.TryGetValue(value[j], out textIdx))
                                 {
-                                    v = v | (textIdx << j * 6);
+                                    v = v | ((long)textIdx << j * 6);
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Error");
-                                    return;
+                                    goto Exit;
                                 }
                             }
+#if DEBUG
+                            fByte = BitConverter.GetBytes(v);
+#endif
                             data.Add(v);
 
                             break;
@@ -133,24 +135,27 @@ namespace BarcodeGenerator
                             float f1;
                             if (!float.TryParse(value, out f1))
                             {
-                                MessageBox.Show("Error");
-                                return;
+                                goto Exit;
                             }
-                            byte[] fByte = BitConverter.GetBytes(f1);
-                            v = BitConverter.ToInt32(fByte, 0);                          
-
+                            fByte = BitConverter.GetBytes(f1);
+                            v = BitConverter.ToUInt32(fByte, 0);
+#if DEBUG
+                            byte[] iByte = BitConverter.GetBytes(v);
+                            float f2 = BitConverter.ToSingle(iByte, 0);
+#endif
                             data.Add(v);
                             break;
 
                         default:
-                            if (int.TryParse(value, out v))
+                            ushort ushortV;
+                            if (UInt16.TryParse(value, out ushortV))
                             {
+                                v = (long)ushortV;
                                 data.Add(v);
                             }
                             else
                             {
-                                MessageBox.Show("Error");
-                                return;
+                                goto Exit;
                             }
 
                             break;
@@ -164,16 +169,14 @@ namespace BarcodeGenerator
 
             if (format == null)
             {
-                MessageBox.Show("Error");
-                return;
+                goto Exit;
             }
 
             int[] deValues, deFormat;
             BarcodeCore.BarcodeDecoder(barcodes, format, out deValues, out deFormat);
             if (deValues == null)
             {
-                MessageBox.Show("Error");
-                return;
+                goto Exit;
             }
 
             string decodeValue = "Barcodes:\r\n";
@@ -207,6 +210,13 @@ namespace BarcodeGenerator
                 }
             }
             txInfo.Text = decodeValue;
+
+            return;
+
+            Exit:
+                MessageBox.Show("Error");
+                txInfo.Text = null;
+                return;
 
         }
 
@@ -284,7 +294,7 @@ namespace BarcodeGenerator
                     MessageBox.Show(ex.Message);
                     return null;
                 }
-                int v = 0;
+                //int v = 0;
                 int index;
                 if (!sizeTable.TryGetValue(text, out index))
                 {
@@ -358,6 +368,12 @@ namespace BarcodeGenerator
                                 word += BarcodeCore.numberText[idx];
                             }
                             decodeValue += word + "\r\n";
+                        }
+                        else if (deFormat[i] == 32)
+                        {
+                            byte[] iByte = BitConverter.GetBytes(deValues[i]);
+                            float f2 = BitConverter.ToSingle(iByte, 0);
+                            decodeValue += f2.ToString() + "\r\n";
                         }
                         else
                         {
