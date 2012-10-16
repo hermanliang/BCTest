@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 
-namespace BarcodeGenerator
+namespace KwBarcode
 {
+    [Guid("2E496F0F-22D0-4CEE-AD35-49142EE08D00")]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+
+    [ComVisible(true)]
     public class BarcodeCore
     {
-        public static string numberText = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";        
+        public static string numberText = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        public BarcodeCore()
+        {
+        }
 
         public static void BarcodeEncoder(int[] bit, long[] values, out List<int[]> format, out List<string> barcodes)
         {            
