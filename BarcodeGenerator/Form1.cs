@@ -23,6 +23,7 @@ namespace BarcodeGenerator
                             9,
                             10,
                             24,
+                            28,
                             32
                         };
         
@@ -38,6 +39,7 @@ namespace BarcodeGenerator
                                 "9 (0-511)",
                                 "10 (0-1023)",
                                 "24 (4英數字)",
+                                "28 (4英數字含標點)",
                                 "32 (浮點數)"
                             };
 
@@ -102,31 +104,14 @@ namespace BarcodeGenerator
                 else
                 {
                     size.Add(index);
-                    byte[] fByte;
                     switch (index)
                     {
                         case 24:
-                            if (value.Length > 4)
-                            {
-                                goto Exit;
-                            }
-                            int textIdx;
-                            for (int j = 0; j < value.Length; j++)
-                            {
-                                if (textTable.TryGetValue(value[j], out textIdx))
-                                {
-                                    v = v | ((long)textIdx << j * 6);
-                                }
-                                else
-                                {
-                                    goto Exit;
-                                }
-                            }
-#if DEBUG
-                            fByte = BitConverter.GetBytes(v);
-#endif
-                            data.Add(v);
+                            data.Add(BarcodeCore.TextToLong(value));
+                            break;
 
+                        case 28:
+                            data.Add(BarcodeCore.Text128ToLong(value));
                             break;
 
                         case 32:
@@ -134,14 +119,8 @@ namespace BarcodeGenerator
                             if (!float.TryParse(value, out f1))
                             {
                                 goto Exit;
-                            }
-                            fByte = BitConverter.GetBytes(f1);
-                            v = BitConverter.ToUInt32(fByte, 0);
-#if DEBUG
-                            byte[] iByte = BitConverter.GetBytes(v);
-                            float f2 = BitConverter.ToSingle(iByte, 0);
-#endif
-                            data.Add(v);
+                            }                            
+                            data.Add(BarcodeCore.FloatToLong(f1));
                             break;
 
                         default:
@@ -155,7 +134,6 @@ namespace BarcodeGenerator
                             {
                                 goto Exit;
                             }
-
                             break;
                     }
                 }
@@ -185,27 +163,24 @@ namespace BarcodeGenerator
             decodeValue += "\r\nDecode Data:\r\n";
             for (int i = 0; i < deValues.Length; i++)
             {
-                if (deFormat[i] == 24)
+                switch (deFormat[i])
                 {
-                    string word = "";
-                    int mask = 0x3F;
-                    for (int j = 0; j < 4; j++)
-                    {
-                        int idx = (deValues[i] >> 6 * j) & mask;
-                        word += BarcodeCore.numberText[idx];                        
-                    }
-                    decodeValue += word + "\r\n";
-                }
-                else if (deFormat[i] == 32)
-                {
-                    byte[] iByte = BitConverter.GetBytes(deValues[i]);
-                    float f2 = BitConverter.ToSingle(iByte, 0);
-                    decodeValue += f2.ToString() + "\r\n";
-                }
-                else
-                {
-                    decodeValue += deValues[i].ToString() + "\r\n";
-                }
+                    case 24:                        
+                        decodeValue += BarcodeCore.IntToText(deValues[i]) + "\r\n";
+                        break;
+
+                    case 28:
+                        decodeValue += BarcodeCore.IntToText128(deValues[i]) + "\r\n";
+                        break;
+
+                    case 32:
+                        decodeValue += BarcodeCore.IntToFloat(deValues[i]).ToString() + "\r\n";
+                        break;
+
+                    default:
+                        decodeValue += deValues[i].ToString() + "\r\n";
+                        break;
+                }               
             }
             txInfo.Text = decodeValue;
 

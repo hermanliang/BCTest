@@ -1,6 +1,6 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Reference=*\G{BDDA171C-4BCB-4B9C-AB45-BD72CC37595E}#1.0#0#..\GlobalDll\KwBarcode.tlb#KwBarcode
+Reference=*\G{BDDA171C-4BCB-4B9C-AB45-BD72CC37595E}#1.0#0#..\..\..\..\..\GlobalDll\KwBarcode.tlb#KwBarcode
 Form=Form1.frm
 Startup="Form1"
 ExeName32="Project1.exe"

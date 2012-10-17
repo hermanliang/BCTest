@@ -1,9 +1,22 @@
-﻿using System;
+﻿/*
+ * File: BarcodeCore.cs
+ * Company: Kaiwood
+ * Description: Barcode encoder and decoder with COM Interop 
+ * Version: v.1.0
+ * Author: Herman Liang
+ * E-Mail: herman@kaiwood.com.tw
+ */
+
+using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace KwBarcode
 {
+    /// <summary>
+    /// COM Interop Interface
+    /// </summary>
     [Guid("2E496F0F-22D0-4CEE-AD35-49142EE08D00")]
     [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     public interface mInterface
@@ -16,8 +29,11 @@ namespace KwBarcode
         void addBit(int bit);
         void addValue(int value);
         void addBarcode(string barcode);
+        bool setBarcodes(string barcodeStrings);
         int textToInt(string text);
         string intToText(int value);
+        int text128ToInt(string text);
+        string intToText128(int value);
         int floatToInt(float value);
         float intToFloat(int value);
         void initBarcodeEncoder();
@@ -33,22 +49,18 @@ namespace KwBarcode
 
         #region COM Interop Members
 
-        private List<int[]> mFormat;
         private List<string> mBarcodes;
         private Dictionary<char, int> textTable = new Dictionary<char, int>();
         private List<int> mBitsList;
         private List<long> mValuesList;
-        private int[] mDecValues;
+        private int[] mDecValues;        
 
         public BarcodeCore()
         {
             mBitsList = new List<int>();
             mValuesList = new List<long>();
             mBarcodes = new List<string>();
-            for (int i = 0; i < numberText.Length; i++)
-            {
-                textTable[numberText[i]] = i;
-            }
+            textTable = getTextTable();
         }
 
         public void addBit(int bit)
@@ -67,16 +79,31 @@ namespace KwBarcode
             mBarcodes.Add(barcode);
         }
 
-        public void initBarcodeEncoder()
+        public bool setBarcodes(string barcodeString)
         {
-            BarcodeEncoder(mBitsList.ToArray(), mValuesList.ToArray(), out mFormat, out mBarcodes);
+            if (barcodeString.Length % 10 != 0 || barcodeString.Length == 0)
+                return false;
+            try
+            {
+                mBarcodes = getBarcodeLists(barcodeString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return true;
+        }
+
+        public void initBarcodeEncoder()
+        {   
+            mBarcodes = BarcodeEncoder(mBitsList.ToArray(), mValuesList.ToArray());
         }
 
         public void initBarcodeDecoder()
         {
-            List<int[]> formats = getFormatData(mBitsList.ToArray());
-            int[] oriFormat;
-            BarcodeDecoder(mBarcodes, formats, out mDecValues, out oriFormat);
+            List<int[]> formats = getFormatData(mBitsList.ToArray());            
+            mDecValues = BarcodeDecoder(mBarcodes, formats);
         }
 
         public string[] Barcodes
@@ -113,53 +140,32 @@ namespace KwBarcode
 
         public int textToInt(string text)
         {
-            int ret = 0;
-            if (text.Length > 4)
-            {
-                return 0;
-            }
-            int textIdx;
-            for (int j = 0; j < text.Length; j++)
-            {
-                if (textTable.TryGetValue(text[j], out textIdx))
-                {
-                    ret = ret | (textIdx << j * 6);
-                }
-                else
-                {
-                    ret = ret | (0 << j * 6);
-                }
-            }
-#if DEBUG
-            byte[] fByte = BitConverter.GetBytes(ret);
-#endif
-            return ret;
+            return (int)(TextToLong(text) & 0xFFFFFFFF);
         }
 
         public string intToText(int value)
         {
-            string word = "";
-            int mask = 0x3F;
-            for (int j = 0; j < 4; j++)
-            {
-                int idx = (value >> 6 * j) & mask;
-                word += numberText[idx];
-            }
-            return word;
+            return IntToText(value);
+        }
+
+        public int text128ToInt(string text)
+        {
+            return (int)(Text128ToLong(text) & 0xFFFFFFFF);
+        }
+
+        public string intToText128(int value)
+        {
+            return IntToText128(value);
         }
 
         public int floatToInt(float value)
         {
-            byte[] fByte = BitConverter.GetBytes(value);
-            int ret = BitConverter.ToInt32(fByte, 0);
-            return ret;
+            return (int)(FloatToLong(value) & 0xFFFFFFFF);
         }
 
         public float intToFloat(int value)
         {
-            byte[] iByte = BitConverter.GetBytes(value);
-            float ret = BitConverter.ToSingle(iByte, 0);
-            return ret;
+            return IntToFloat(value);
         }
 
         #endregion
@@ -256,6 +262,14 @@ namespace KwBarcode
 
         }
 
+        public static List<string> BarcodeEncoder(int[] bit, long[] values)
+        {
+            List<int[]> oFormat;
+            List<string> barcodes;
+            BarcodeEncoder(bit, values, out oFormat, out barcodes);
+            return barcodes;
+        }
+
         public static void BarcodeDecoder(List<string> barcodes, List<int[]> format, out int[] values, out int[] oriFormat)
         {
             values = null;
@@ -332,6 +346,32 @@ namespace KwBarcode
 
         }
 
+        public static int[] BarcodeDecoder(List<string> barcodes, List<int[]> format)
+        {
+            int[] values = null;
+            int[] oriFormat = null;
+            BarcodeDecoder(barcodes, format, out values, out oriFormat);
+            return values;
+        }
+
+        public static int[] BarcodeDecoder(string barcodes, int[] bitsWithoutChecksum)
+        {
+            int[] values = null;
+
+            try
+            {
+                List<int[]> format = getFormatData(bitsWithoutChecksum);
+                List<string> BCs = getBarcodeLists(barcodes);
+                values = BarcodeDecoder(BCs, format);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return values;
+        }
+
         public static List<int[]> getFormatData(int[] bit)
         {
             List<int[]> format = new List<int[]>();
@@ -385,6 +425,19 @@ namespace KwBarcode
             return format;
         }
 
+        public static List<string> getBarcodeLists(string barcodes)
+        {
+            List<string> oBarcodes = new List<string>();
+            if (barcodes.Length % 10 != 0 || barcodes.Length == 0)
+                throw new Exception("Barcode length error!");
+
+            for (int i = 0; i < barcodes.Length / 10; i++)
+            {
+                oBarcodes.Add(barcodes.Substring(i * 10, 10));
+            }
+            return oBarcodes;
+        }
+
         public static bool validValue(long value, int bit)
         {
 
@@ -393,6 +446,122 @@ namespace KwBarcode
                 return false;
             }
             return true;
+        }
+
+        public static long TextToLong(string text)
+        {
+            long ret = 0;
+            if (text.Length > 4)
+            {
+                text = text.Substring(0, 4);
+            }
+            int textIdx;
+            Dictionary<char, int> table = getTextTable();
+            for (int j = 0; j < text.Length; j++)
+            {
+                if (table.TryGetValue(text[j], out textIdx))
+                {
+                    ret = ret | ((long)textIdx << j * 6);
+                }
+                else
+                {
+                    ret = ret | (0L << j * 6);
+                }
+            }
+#if DEBUG
+            byte[] fByte = BitConverter.GetBytes(ret);
+#endif
+            return ret;
+        }
+
+        public static string IntToText(int value)
+        {
+            string word = "";
+            int mask = 0x3F;
+            for (int j = 0; j < 4; j++)
+            {
+                int idx = (value >> 6 * j) & mask;
+                word += numberText[idx];
+            }
+            return word;
+        }
+
+        /// <summary>
+        /// 轉換 7-bit (英數字含標點) 為整數，最大為 4 個字 (28-bit)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static long Text128ToLong(string text)
+        {
+            long ret = 0;
+            if (text.Length > 4)
+            {
+                text = text.Substring(0, 4);
+            }
+            Encoding encoder = Encoding.ASCII;
+            byte[] codes = encoder.GetBytes(text);
+            if (codes.Length > 4)
+            {
+                return 32; // space
+            }
+
+            for (int i = 0; i < codes.Length; i++)
+            {
+                if (codes[i] < 128)
+                {
+                    ret = ret | ((long)codes[i] << i * 7);
+                }
+                else
+                {
+                    ret = ret | (0L << i * 7);
+                }
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string IntToText128(int value)
+        {
+            Encoding encoder = Encoding.ASCII;
+            string word = "";
+            int mask = 0x7F;
+            for (int i = 0; i < 4; i++)
+            {
+                byte idx = (byte)((value >> 7 * i) & mask);
+                if (idx != 0)
+                {
+                    word += encoder.GetString(new byte[] { idx });
+                }                
+            }
+            return word;
+        }
+
+        public static long FloatToLong(float value)
+        {
+            byte[] fByte = BitConverter.GetBytes(value);
+            long ret = BitConverter.ToUInt32(fByte, 0);            
+            return ret;
+        }
+
+        public static float IntToFloat(int value)
+        {
+            byte[] iByte = BitConverter.GetBytes(value);
+            float ret = BitConverter.ToSingle(iByte, 0);
+            return ret;
+        }
+
+        public static Dictionary<char, int> getTextTable()
+        {
+            Dictionary<char, int> table = new Dictionary<char, int>();
+            for (int i = 0; i < numberText.Length; i++)
+            {
+                table[numberText[i]] = i;
+            }
+            return table;
         }
 
         #endregion
