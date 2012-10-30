@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeGenerator", "Barcode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KwBarcode", "KwBarcode\KwBarcode.csproj", "{6B1B3DCE-C042-4F90-8CD2-D547B5E3D8F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenCode128", "GenCode128\GenCode128.csproj", "{32817BF9-E380-4467-9C7F-936F4B122BC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,21 @@ Global
 		{6B1B3DCE-C042-4F90-8CD2-D547B5E3D8F4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6B1B3DCE-C042-4F90-8CD2-D547B5E3D8F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6B1B3DCE-C042-4F90-8CD2-D547B5E3D8F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.GlobalDll|Any CPU.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.GlobalDll|Any CPU.Build.0 = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.GlobalDll|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.GlobalDll|Mixed Platforms.Build.0 = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.GlobalDll|x86.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

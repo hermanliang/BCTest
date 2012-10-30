@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using KwBarcode;
+using GenCode128;
+using System.Drawing;
 
 
 namespace BarcodeGenerator
@@ -147,6 +149,15 @@ namespace BarcodeGenerator
             {
                 goto Exit;
             }
+
+            string mBarcodes = "";
+            foreach (string barcode in barcodes)
+            {
+                mBarcodes += barcode;
+            }
+
+            Image image = Code128Rendering.MakeBarcodeImage(mBarcodes, 5, true);
+            (new BarcodeWindow(image)).Show();
 
             int[] deValues, deFormat;
             BarcodeCore.BarcodeDecoder(barcodes, format, out deValues, out deFormat);
