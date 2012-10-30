@@ -137,8 +137,10 @@ namespace NuCloverBarcode
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                errScanning(0);
                 return false;
             }
+            setLabelDefault(0);
             return true;
         }
 
@@ -155,10 +157,67 @@ namespace NuCloverBarcode
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                errScanning(1);
                 return false;
             }
-
+            setLabelDefault(1);
             return true;
+        }
+
+        private void errScanning(int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    try { mCco = int.Parse(TxCco.Text); }
+                    catch { LbCco.ForeColor = Color.Red; }
+                    try { mTco = int.Parse(TxTco.Text); }
+                    catch { LbTco.ForeColor = Color.Red; }
+                    try { mTn = TxTn.Text; }
+                    catch { LbTn.ForeColor = Color.Red; }
+                    try { mSp = float.Parse(TxSp.Text); }
+                    catch { LbSp.ForeColor = Color.Red; }
+                    try { mIc = float.Parse(TxIc.Text); }
+                    catch { LbIc.ForeColor = Color.Red; }
+                    break;
+
+                case 1:
+                    try { mLb = int.Parse(TxLb.Text); }
+                    catch { LbLb.ForeColor = Color.Red; }
+                    try { mTb = int.Parse(TxTb.Text); }
+                    catch { LbTb.ForeColor = Color.Red; }
+                    try { mTw = int.Parse(TxTw.Text); }
+                    catch { LbTw.ForeColor = Color.Red; }
+                    try { mTh = int.Parse(TxTh.Text); }
+                    catch { LbTh.ForeColor = Color.Red; }
+                    try { mTi = int.Parse(TxTi.Text); }
+                    catch { LbTi.ForeColor = Color.Red; }
+                    break;
+
+            }
+        }
+
+        private void setLabelDefault(int type)
+        {
+            switch (type)
+            {
+                case 0:
+                    LbCco.ForeColor = Color.Black;
+                    LbTco.ForeColor = Color.Black;
+                    LbTn.ForeColor = Color.Black;
+                    LbSp.ForeColor = Color.Black;
+                    LbIc.ForeColor = Color.Black;
+                    break;
+
+                case 1:
+                    LbLb.ForeColor = Color.Black;
+                    LbTb.ForeColor = Color.Black;
+                    LbTw.ForeColor = Color.Black;
+                    LbTh.ForeColor = Color.Black;
+                    LbTi.ForeColor = Color.Black;
+                    break;
+
+            }
         }
 
         private Rectangle[] getTargetRect()

@@ -40,16 +40,16 @@
             this.TxTb = new System.Windows.Forms.TextBox();
             this.TxLb = new System.Windows.Forms.TextBox();
             this.TxTi = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.LbCco = new System.Windows.Forms.Label();
+            this.LbTco = new System.Windows.Forms.Label();
+            this.LbTn = new System.Windows.Forms.Label();
+            this.LbSp = new System.Windows.Forms.Label();
+            this.LbIc = new System.Windows.Forms.Label();
+            this.LbLb = new System.Windows.Forms.Label();
+            this.LbTb = new System.Windows.Forms.Label();
+            this.LbTw = new System.Windows.Forms.Label();
+            this.LbTh = new System.Windows.Forms.Label();
+            this.LbTi = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnLoadImage = new System.Windows.Forms.Button();
@@ -92,6 +92,7 @@
             // TxTn
             // 
             this.TxTn.Location = new System.Drawing.Point(162, 96);
+            this.TxTn.MaxLength = 4;
             this.TxTn.Name = "TxTn";
             this.TxTn.Size = new System.Drawing.Size(50, 22);
             this.TxTn.TabIndex = 3;
@@ -178,95 +179,95 @@
             this.TxTi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTi.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
-            // label1
+            // LbCco
             // 
-            this.label1.Location = new System.Drawing.Point(13, 40);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(143, 23);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "C-Cutoff (0-30):";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbCco.Location = new System.Drawing.Point(13, 40);
+            this.LbCco.Name = "LbCco";
+            this.LbCco.Size = new System.Drawing.Size(143, 23);
+            this.LbCco.TabIndex = 12;
+            this.LbCco.Text = "C-Cutoff (0-30):";
+            this.LbCco.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label2
+            // LbTco
             // 
-            this.label2.Location = new System.Drawing.Point(13, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(143, 23);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "T-Cutoff (0-30):";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTco.Location = new System.Drawing.Point(13, 68);
+            this.LbTco.Name = "LbTco";
+            this.LbTco.Size = new System.Drawing.Size(143, 23);
+            this.LbTco.TabIndex = 13;
+            this.LbTco.Text = "T-Cutoff (0-30):";
+            this.LbTco.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label3
+            // LbTn
             // 
-            this.label3.Location = new System.Drawing.Point(12, 96);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 23);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "T-Name (Max. length 4):";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTn.Location = new System.Drawing.Point(12, 96);
+            this.LbTn.Name = "LbTn";
+            this.LbTn.Size = new System.Drawing.Size(144, 23);
+            this.LbTn.TabIndex = 14;
+            this.LbTn.Text = "T-Name (Max. length 4):";
+            this.LbTn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label4
+            // LbSp
             // 
-            this.label4.Location = new System.Drawing.Point(218, 12);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(143, 23);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Slope:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbSp.Location = new System.Drawing.Point(218, 12);
+            this.LbSp.Name = "LbSp";
+            this.LbSp.Size = new System.Drawing.Size(143, 23);
+            this.LbSp.TabIndex = 15;
+            this.LbSp.Text = "Slope:";
+            this.LbSp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label5
+            // LbIc
             // 
-            this.label5.Location = new System.Drawing.Point(218, 40);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(143, 23);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Intercept:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbIc.Location = new System.Drawing.Point(218, 40);
+            this.LbIc.Name = "LbIc";
+            this.LbIc.Size = new System.Drawing.Size(143, 23);
+            this.LbIc.TabIndex = 16;
+            this.LbIc.Text = "Intercept:";
+            this.LbIc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label6
+            // LbLb
             // 
-            this.label6.Location = new System.Drawing.Point(218, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(143, 23);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "Left bound:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbLb.Location = new System.Drawing.Point(218, 68);
+            this.LbLb.Name = "LbLb";
+            this.LbLb.Size = new System.Drawing.Size(143, 23);
+            this.LbLb.TabIndex = 17;
+            this.LbLb.Text = "Left bound (0-255):";
+            this.LbLb.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label7
+            // LbTb
             // 
-            this.label7.Location = new System.Drawing.Point(218, 96);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(143, 23);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Top bound:";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTb.Location = new System.Drawing.Point(218, 96);
+            this.LbTb.Name = "LbTb";
+            this.LbTb.Size = new System.Drawing.Size(143, 23);
+            this.LbTb.TabIndex = 18;
+            this.LbTb.Text = "Top bound (0-255):";
+            this.LbTb.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label8
+            // LbTw
             // 
-            this.label8.Location = new System.Drawing.Point(423, 14);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(143, 23);
-            this.label8.TabIndex = 19;
-            this.label8.Text = "Target width:";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTw.Location = new System.Drawing.Point(423, 14);
+            this.LbTw.Name = "LbTw";
+            this.LbTw.Size = new System.Drawing.Size(143, 23);
+            this.LbTw.TabIndex = 19;
+            this.LbTw.Text = "Target width (0-63):";
+            this.LbTw.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label9
+            // LbTh
             // 
-            this.label9.Location = new System.Drawing.Point(423, 40);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(143, 23);
-            this.label9.TabIndex = 20;
-            this.label9.Text = "Target height:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTh.Location = new System.Drawing.Point(423, 40);
+            this.LbTh.Name = "LbTh";
+            this.LbTh.Size = new System.Drawing.Size(143, 23);
+            this.LbTh.TabIndex = 20;
+            this.LbTh.Text = "Target height (0-127):";
+            this.LbTh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label10
+            // LbTi
             // 
-            this.label10.Location = new System.Drawing.Point(423, 68);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(143, 23);
-            this.label10.TabIndex = 21;
-            this.label10.Text = "Target interval:";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.LbTi.Location = new System.Drawing.Point(423, 68);
+            this.LbTi.Name = "LbTi";
+            this.LbTi.Size = new System.Drawing.Size(143, 23);
+            this.LbTi.TabIndex = 21;
+            this.LbTi.Text = "Target interval (0-127):";
+            this.LbTi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label11
             // 
@@ -279,6 +280,9 @@
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Location = new System.Drawing.Point(478, 96);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(217, 154);
@@ -323,16 +327,16 @@
             this.Controls.Add(this.btnLoadImage);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LbTi);
+            this.Controls.Add(this.LbTh);
+            this.Controls.Add(this.LbTw);
+            this.Controls.Add(this.LbTb);
+            this.Controls.Add(this.LbLb);
+            this.Controls.Add(this.LbIc);
+            this.Controls.Add(this.LbSp);
+            this.Controls.Add(this.LbTn);
+            this.Controls.Add(this.LbTco);
+            this.Controls.Add(this.LbCco);
             this.Controls.Add(this.TxTi);
             this.Controls.Add(this.TxLb);
             this.Controls.Add(this.TxTb);
@@ -368,16 +372,16 @@
         private System.Windows.Forms.TextBox TxTb;
         private System.Windows.Forms.TextBox TxLb;
         private System.Windows.Forms.TextBox TxTi;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label LbCco;
+        private System.Windows.Forms.Label LbTco;
+        private System.Windows.Forms.Label LbTn;
+        private System.Windows.Forms.Label LbSp;
+        private System.Windows.Forms.Label LbIc;
+        private System.Windows.Forms.Label LbLb;
+        private System.Windows.Forms.Label LbTb;
+        private System.Windows.Forms.Label LbTw;
+        private System.Windows.Forms.Label LbTh;
+        private System.Windows.Forms.Label LbTi;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btnLoadImage;
