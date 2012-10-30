@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KwBarcode", "KwBarcode\KwBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenCode128", "GenCode128\GenCode128.csproj", "{32817BF9-E380-4467-9C7F-936F4B122BC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuCloverBarcode", "NuCloverBarcode\NuCloverBarcode.csproj", "{27023332-DB3F-4E13-A1D9-97FF0845DA43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,21 @@ Global
 		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{32817BF9-E380-4467-9C7F-936F4B122BC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Debug|x86.ActiveCfg = Debug|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Debug|x86.Build.0 = Debug|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.GlobalDll|Any CPU.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.GlobalDll|Mixed Platforms.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.GlobalDll|Mixed Platforms.Build.0 = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.GlobalDll|x86.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.GlobalDll|x86.Build.0 = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Release|Any CPU.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Release|Mixed Platforms.Build.0 = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Release|x86.ActiveCfg = Release|x86
+		{27023332-DB3F-4E13-A1D9-97FF0845DA43}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
