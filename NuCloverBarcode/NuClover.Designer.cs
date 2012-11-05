@@ -257,7 +257,7 @@
             this.LbTh.Name = "LbTh";
             this.LbTh.Size = new System.Drawing.Size(143, 23);
             this.LbTh.TabIndex = 20;
-            this.LbTh.Text = "Target height (0-127):";
+            this.LbTh.Text = "Target height (0-63):";
             this.LbTh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LbTi
@@ -266,7 +266,7 @@
             this.LbTi.Name = "LbTi";
             this.LbTi.Size = new System.Drawing.Size(143, 23);
             this.LbTi.TabIndex = 21;
-            this.LbTi.Text = "Target interval (0-127):";
+            this.LbTi.Text = "Target interval (0-255):";
             this.LbTi.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label11

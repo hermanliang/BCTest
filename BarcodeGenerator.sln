@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuCloverBarcode", "NuClover
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zxing", "zxingLib\zxing.csproj", "{6431CF13-7A7B-4602-B96A-47CDA6F0B008}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZxingQRReader", "ZxingQRReader\ZxingQRReader.csproj", "{92938A39-F883-42C0-AFE2-A00AB451AB7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,21 @@ Global
 		{6431CF13-7A7B-4602-B96A-47CDA6F0B008}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6431CF13-7A7B-4602-B96A-47CDA6F0B008}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6431CF13-7A7B-4602-B96A-47CDA6F0B008}.Release|x86.ActiveCfg = Release|Any CPU
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Debug|x86.ActiveCfg = Debug|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Debug|x86.Build.0 = Debug|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.GlobalDll|Any CPU.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.GlobalDll|Mixed Platforms.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.GlobalDll|Mixed Platforms.Build.0 = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.GlobalDll|x86.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.GlobalDll|x86.Build.0 = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Release|Any CPU.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Release|x86.ActiveCfg = Release|x86
+		{92938A39-F883-42C0-AFE2-A00AB451AB7F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

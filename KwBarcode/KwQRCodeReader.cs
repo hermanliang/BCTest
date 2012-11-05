@@ -7,6 +7,7 @@
  * E-Mail: herman@kaiwood.com.tw
  */
 using System;
+using System.Collections;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -16,21 +17,12 @@ using com.google.zxing.qrcode;
 
 namespace KwBarcode
 {
-    [Guid("F7872A5E-02C9-4DA9-8CE5-A40A82DB463D")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
-    public interface QRInterface
-    {
-        string FilePath { get; set; }
-        string Text { get; }
-        byte[] RawByte { get; }
-        void decode();
-    }
-
     [Guid("3E73EE86-F46D-411D-BE6F-87060B7E6E6A")]
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [ProgId("KwQRCodeReader")]
-    public class KwQRCodeReader : QRInterface
+    public class KwQRCodeReader : IQRCode
     {
+        private QRCodeReader reader;
         private string filePath = "";
         private string text = "";
         private int counter = 0;
@@ -38,6 +30,7 @@ namespace KwBarcode
 
         public KwQRCodeReader()
         {
+            reader = new QRCodeReader();
         }
 
         public string FilePath
@@ -57,16 +50,26 @@ namespace KwBarcode
         }
 
         public void decode()
+        {   
+            Bitmap image = new Bitmap(filePath);
+            decode(image);
+        }
+
+        public void decode(Bitmap image)
         {
             try
             {
-                Bitmap image = new Bitmap(filePath);
                 Result result = ProcessQRReader(image);
                 text = result.Text;
-                rawByte = new byte[result.RawBytes.Length];
-                for (int i = 0; i < result.RawBytes.Length; i++)
+
+                ICollection keyColl = result.ResultMetadata.Keys;
+                foreach (object key in keyColl)
                 {
-                    rawByte[i] = (byte)result.RawBytes[i];
+                    object v1 = result.ResultMetadata[key];
+                    ArrayList data = (ArrayList)v1;
+                    this.rawByte = (byte[])data[0];
+                    Console.WriteLine(key);
+                    break;
                 }
             }
             catch (FileNotFoundException fnfex)
@@ -90,8 +93,7 @@ namespace KwBarcode
         }
 
         private Result ProcessQRReader(Bitmap image)
-        {
-            QRCodeReader reader = new QRCodeReader();
+        {   
             LuminanceSource ls = new RGBLuminanceSource(image, image.Width, image.Height);
             Binarizer hb = new HybridBinarizer(ls);
             Result result = null;

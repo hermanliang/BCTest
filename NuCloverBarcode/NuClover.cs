@@ -62,8 +62,8 @@ namespace NuCloverBarcode
             32,
             8,
             6,
-            7,
-            7,
+            6,
+            8,
             8
         };
 
