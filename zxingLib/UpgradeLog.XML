@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="zxing">
+</Property><Property Name="方案檔" Value="D:\MyDocuments\Projects\QRCode\zxing-2.0\csharp\zxing.sln">
+</Property><Property Name="Date" Value="2012年10月5日">
+</Property><Property Name="Time" Value="下午 17:21:42">
+</Property></Properties><Event ErrorLevel="1" Project="zxing" Source="zxing.csproj" Description="您的專案是以 .NET Framework 2.0 或 3.0 為目標。如果您的專案使用需要較新版 .NET Framework 的組件，專案建置將會失敗。您可以變更 .NET Framework 版本，方法是按一下專案功能表上的 [屬性]，然後在 [.NET Framework] 下拉式方塊中選取新的版本 (在 Visual Basic 中，它的位置是在按一下 [進階編譯選項...] 按鈕時顯示的 [編譯] 索引標籤上)。">
+</Event><Event ErrorLevel="0" Project="zxing" Source="zxing.csproj" Description="專案轉換成功">
+</Event><Event ErrorLevel="3" Project="zxing" Source="zxing.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="zxing" Source="zxing.csproj" Description="掃描完成: 專案檔不需要升級。">
+</Event></UpgradeLog>
