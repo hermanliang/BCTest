@@ -66,6 +66,8 @@ namespace KwBarcode
                 foreach (object key in keyColl)
                 {
                     object v1 = result.ResultMetadata[key];
+                    if (v1.GetType().Equals(typeof(string)))
+                        continue;
                     ArrayList data = (ArrayList)v1;
                     this.rawByte = (byte[])data[0];
                     Console.WriteLine(key);
@@ -93,7 +95,8 @@ namespace KwBarcode
         }
 
         private Result ProcessQRReader(Bitmap image)
-        {   
+        {
+            image = preProcessImage(image);
             LuminanceSource ls = new RGBLuminanceSource(image, image.Width, image.Height);
             Binarizer hb = new HybridBinarizer(ls);
             Result result = null;
@@ -123,6 +126,26 @@ namespace KwBarcode
             }
             counter = 0;
             return result;
+        }
+
+        private Bitmap preProcessImage(Bitmap image)
+        {
+            if (image == null)
+                return null;
+            int minLen = int.MaxValue;
+            minLen = minLen > image.Height ? image.Height : minLen;
+            minLen = minLen > image.Width ? image.Width : minLen;
+            if (minLen > 256)
+            {
+                image = new Bitmap(
+                    image,
+                    new Size(
+                        (int)((double)image.Width / minLen * 256),
+                        (int)((double)image.Height / minLen * 256)
+                    )
+                );
+            }
+            return image;
         }
     }
 }
