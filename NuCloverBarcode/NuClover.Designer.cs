@@ -56,6 +56,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -135,7 +137,7 @@
             this.TxTw.Name = "TxTw";
             this.TxTw.Size = new System.Drawing.Size(100, 22);
             this.TxTw.TabIndex = 7;
-            this.TxTw.Text = "50";
+            this.TxTw.Text = "37";
             this.TxTw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTw.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -165,7 +167,7 @@
             this.TxLb.Name = "TxLb";
             this.TxLb.Size = new System.Drawing.Size(50, 22);
             this.TxLb.TabIndex = 10;
-            this.TxLb.Text = "215";
+            this.TxLb.Text = "235";
             this.TxLb.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxLb.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -175,7 +177,7 @@
             this.TxTi.Name = "TxTi";
             this.TxTi.Size = new System.Drawing.Size(100, 22);
             this.TxTi.TabIndex = 11;
-            this.TxTi.Text = "80";
+            this.TxTi.Text = "135";
             this.TxTi.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTi.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -283,9 +285,9 @@
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Location = new System.Drawing.Point(478, 96);
+            this.pictureBox2.Location = new System.Drawing.Point(478, 125);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(217, 154);
+            this.pictureBox2.Size = new System.Drawing.Size(217, 125);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 23;
             this.pictureBox2.TabStop = false;
@@ -318,11 +320,38 @@
             // 
             this.openFileDialog1.Filter = "PNG, JPEG File (*.png, *.jpg)|*.png;*.jpg";
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(529, 103);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(37, 16);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.Text = "+/-";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "2 Lines",
+            "4 Lines"});
+            this.comboBox1.Location = new System.Drawing.Point(220, 12);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(79, 20);
+            this.comboBox1.TabIndex = 28;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.generateBarcodeImage);
+            // 
             // NuClover
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 262);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnLoadImage);
             this.Controls.Add(this.pictureBox2);
@@ -388,6 +417,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

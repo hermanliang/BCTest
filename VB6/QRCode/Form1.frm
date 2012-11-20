@@ -78,47 +78,64 @@ Attribute VB_Exposed = False
 '       於命令提示字元(cmd.exe) 輸入下面的命令 (若使用 Win7/Vista，需使用系統管理員身份開啟命令提示字元)
 '           RegAsm KwBarcode.dll /u
 '
-' * 完成上述步驟，將執行檔(Project1.exe) 與 KwBarcode.dll 放置於同一目錄下即可正常執行。
+' * 完成上述步驟，將執行檔(Project1.exe) 與 KwBarcode.dll, zxing.dll 放置於同一目錄下即可正常執行。
 '
 ' * 開發者設定:
-'       選單->專案->設定引用項目->瀏覽->KwBarcode.tlb (查詢方法: 檢視->瀏覽物件->搜尋 BarcodeCore)
-'       將 KwBarcode.dll 放置於 D:\GlobalDll
-'       編輯 Windows 環境變數，將 D:\GlobalDll 新增至 PATH 變數內 (讓執行階段可以 Access 到 KwBarcode.dll)
+'       選單->專案->設定引用項目->瀏覽->KwBarcode.tlb (查詢方法: 檢視->瀏覽物件->搜尋 KwQRCodeReader, KwQRCodeWriter)
+'       將 KwBarcode.dll, zxing.dll 放置於 D:\GlobalDll
+'       編輯 Windows 環境變數，將 D:\GlobalDll 新增至 PATH 變數內 (讓執行階段可以 Access 到 KwBarcode.dll, zxing.dll)
 '       註冊 KwBarcode.dll 至系統中
+'
+' * Comdlg.ocx not registered issue:
+'       將 Comdlg32.ocx copy 至 C:\Windows\System32\ 資料夾
+'       執行 regsvr32 %SystemRoot%\System32\comdlg32.ocx (好像不用也可以)
 '
 ' ###################################################################################
 
 Option Explicit
 
 Private Sub Command1_Click()
-
-With CommonDialog1
-    .FileName = ""
-    .Filter = "BMP JPEG Files (*.bmp, *.jpg) |*.bmp;*.jpeg;*.jpg|All files (*.*) |*.*|"
-    .ShowOpen
-End With
-If CommonDialog1.FileName = "" Then Exit Sub
-Dim obj As New KwQRCodeReader
-obj.FilePath = CommonDialog1.FileName
-obj.decode
-Label1.Caption = obj.text
-
-
+    ' QRCode Reader
+    
+    ' Open file Dialog
+    With CommonDialog1
+        .FileName = ""
+        .Filter = "BMP JPEG Files (*.bmp, *.jpg) |*.bmp;*.jpeg;*.jpg|All files (*.*) |*.*|"
+        .ShowOpen
+    End With
+    If CommonDialog1.FileName = "" Then Exit Sub
+    
+    ' QRCode Reader
+    Dim obj As New KwQRCodeReader
+    obj.FilePath = CommonDialog1.FileName
+    
+    ' 解碼 function 結果儲存於 obj.text 中
+    ' Byte 資料儲存於 obj.RawByte (Byte Array)
+    obj.decode
+    Label1.Caption = obj.text
 
 End Sub
 
 Private Sub Command2_Click()
+    ' QRCode 產生器
+    
     Dim text As String
     text = Text1.text
+    
+    ' Save File Dialog
     With CommonDialog2
         .FileName = ""
         .Filter = "BMP Files (*.bmp) |*.bmp"
         .ShowOpen
     End With
     If CommonDialog2.FileName = "" Then Exit Sub
+    
+    'QRCode Writer 物件
     Dim obj As New KwQRCodeWriter
     Dim path As String
     path = CommonDialog2.FileName
+    
+    ' 產生 QRCode 並存成圖檔
     Call obj.encodeAndSave(text, path)
 
 End Sub

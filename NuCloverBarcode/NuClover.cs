@@ -34,7 +34,7 @@ namespace NuCloverBarcode
 
         private long
             lVer = 0,
-            lEqu = 0,
+            lEqu = 1,
             lYear,
             lMonth,
             lDate,
@@ -78,6 +78,8 @@ namespace NuCloverBarcode
             TxTw.TextChanged += onTargetParamChanged;
             TxTh.TextChanged += onTargetParamChanged;
             TxTi.TextChanged += onTargetParamChanged;
+            comboBox1.SelectedIndexChanged += onTargetParamChanged;
+            comboBox1.SelectedIndex = 0;
 
             generateBarcodeImage(this, new EventArgs());
 
@@ -124,6 +126,7 @@ namespace NuCloverBarcode
         {
             try
             {
+                lVer = comboBox1.SelectedIndex;
                 DateTime dateTime = dateTimePicker1.Value;
                 mYear = dateTime.Year - 2012;
                 mMonth = dateTime.Month;
@@ -222,9 +225,24 @@ namespace NuCloverBarcode
 
         private Rectangle[] getTargetRect()
         {
-            Rectangle[] rect = new Rectangle[2];
-            rect[0] = new Rectangle(mLb, mTb, mTw, mTh);
-            rect[1] = new Rectangle(mLb, mTb + mTi, mTw, mTh);
+            Rectangle[] rect = null;
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0:
+                    rect = new Rectangle[2];
+                    rect[0] = new Rectangle(mLb, mTb, mTw, mTh);
+                    rect[1] = new Rectangle(mLb, mTb + mTi, mTw, mTh);
+                    break;
+                case 1:
+                    rect = new Rectangle[4];
+                    rect[0] = new Rectangle(mLb, mTb, mTw, mTh);
+                    rect[1] = new Rectangle(mLb, mTb + mTi, mTw, mTh);
+                    rect[2] = new Rectangle(mLb, mTb + mTi * 2, mTw, mTh);
+                    rect[3] = new Rectangle(mLb, mTb + mTi * 3, mTw, mTh);
+                    break;
+
+            }
+            
             return rect;
         }
 
@@ -304,6 +322,22 @@ namespace NuCloverBarcode
                     MessageBox.Show("Complete", "Message");
                 }
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.Checked)
+            {
+                cb.Text = "+/-";
+                lEqu = 1;
+            }
+            else
+            {
+                cb.Text = "-/+";
+                lEqu = 0;
+            }
+            generateBarcodeImage(sender, e);
         }
     }
 }
