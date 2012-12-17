@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NuClover));
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.TxCco = new System.Windows.Forms.TextBox();
             this.TxTco = new System.Windows.Forms.TextBox();
@@ -58,8 +59,11 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // dateTimePicker1
@@ -70,6 +74,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(145, 22);
             this.dateTimePicker1.TabIndex = 0;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // TxCco
             // 
@@ -106,7 +111,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 172);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(460, 78);
+            this.pictureBox1.Size = new System.Drawing.Size(329, 78);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -232,7 +237,7 @@
             this.LbLb.Name = "LbLb";
             this.LbLb.Size = new System.Drawing.Size(143, 23);
             this.LbLb.TabIndex = 17;
-            this.LbLb.Text = "Left bound (0-255):";
+            this.LbLb.Text = "Left bound (100-355):";
             this.LbLb.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LbTb
@@ -241,7 +246,7 @@
             this.LbTb.Name = "LbTb";
             this.LbTb.Size = new System.Drawing.Size(143, 23);
             this.LbTb.TabIndex = 18;
-            this.LbTb.Text = "Top bound (0-255):";
+            this.LbTb.Text = "Top bound (100-355):";
             this.LbTb.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // LbTw
@@ -304,7 +309,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(179, 133);
+            this.btnSave.Location = new System.Drawing.Point(96, 133);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(98, 23);
             this.btnSave.TabIndex = 26;
@@ -343,13 +348,35 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(79, 20);
             this.comboBox1.TabIndex = 28;
+            this.comboBox1.Visible = false;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.generateBarcodeImage);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(347, 133);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(125, 117);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 29;
+            this.pictureBox3.TabStop = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(201, 133);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 23);
+            this.button1.TabIndex = 30;
+            this.button1.Text = "Save QRCode";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.saveQRCode_Click);
             // 
             // NuClover
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 262);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.btnSave);
@@ -378,10 +405,12 @@
             this.Controls.Add(this.TxTco);
             this.Controls.Add(this.TxCco);
             this.Controls.Add(this.dateTimePicker1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NuClover";
             this.Text = "NuClover Barcode Generator";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,6 +448,8 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button button1;
     }
 }
 

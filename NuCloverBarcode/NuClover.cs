@@ -14,8 +14,10 @@ namespace NuCloverBarcode
 {
     public partial class NuClover : Form
     {
+        private KwQRCodeWriter writer;
         private Bitmap mImage = null;
         private Image mBarcodeImage = null;
+        private Bitmap mQRCodeImage = null;
         private int
             mYear,
             mMonth,
@@ -73,6 +75,7 @@ namespace NuCloverBarcode
             String theVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Text = "NuClover Barcode Generator (v." + theVersion + ")";
 
+            writer = new KwQRCodeWriter();
             TxTb.TextChanged += onTargetParamChanged;
             TxLb.TextChanged += onTargetParamChanged;
             TxTw.TextChanged += onTargetParamChanged;
@@ -82,7 +85,6 @@ namespace NuCloverBarcode
             comboBox1.SelectedIndex = 0;
 
             generateBarcodeImage(this, new EventArgs());
-
         }
 
         private void btnLoadImage_Click(object sender, EventArgs e)
@@ -156,6 +158,8 @@ namespace NuCloverBarcode
                 mTw = int.Parse(TxTw.Text);
                 mTh = int.Parse(TxTh.Text);
                 mTi = int.Parse(TxTi.Text);
+                mLb = mLb < 100 ? 100 : mLb;
+                mTb = mTb < 100 ? 100 : mTb;
             }
             catch (Exception ex)
             {
@@ -251,6 +255,13 @@ namespace NuCloverBarcode
             pictureBox2.Image = drawTargetZoneOnImage(mImage);
         }
 
+        private Bitmap generateQRCodeImage(string BC)
+        {   
+            if (BC == null || BC.Equals(""))
+                return null;
+            return writer.textToQRImage(BC);
+        }
+
         private void generateBarcodeImage(object sender, EventArgs e)
         {
             if (gatherAllDate())
@@ -282,17 +293,22 @@ namespace NuCloverBarcode
                         BC += barcode;
                     }
                     mBarcodeImage = Code128Rendering.MakeBarcodeImage(BC, 5, true);
+                    mQRCodeImage = writer.textToQRImage(BC);
                 }
                 else
                 {
                     mBarcodeImage = null;
+                    mQRCodeImage = null;
                 }
             }
             else
             {
                 mBarcodeImage = null;
+                mQRCodeImage = null;
             }
+            
             pictureBox1.Image = mBarcodeImage;
+            pictureBox3.Image = mQRCodeImage;
         }
 
         private void convertAllDataToLong()
@@ -305,11 +321,11 @@ namespace NuCloverBarcode
             lTn = BarcodeCore.TextToLong(mTn);
             lSp = BarcodeCore.FloatToLong(mSp);
             lIc = BarcodeCore.FloatToLong(mIc);
-            lLb = (long)mLb;
+            lLb = (long)(mLb - 100);
             lTw = (long)mTw;
             lTh = (long)mTh;
             lTi = (long)mTi;
-            lTb = (long)mTb;
+            lTb = (long)(mTb - 100);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -338,6 +354,18 @@ namespace NuCloverBarcode
                 lEqu = 0;
             }
             generateBarcodeImage(sender, e);
+        }
+
+        private void saveQRCode_Click(object sender, EventArgs e)
+        {
+            if (mQRCodeImage != null)
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    mQRCodeImage.Save(saveFileDialog1.FileName, ImageFormat.Bmp);
+                    MessageBox.Show("Complete", "Message");
+                }
+            }
         }
     }
 }
