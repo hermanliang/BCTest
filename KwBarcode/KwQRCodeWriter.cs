@@ -65,7 +65,7 @@ namespace KwBarcode
         public Bitmap textToQRImage(string text)
         {
             try
-            {
+            {   
                 ByteMatrix byteMatrix = writer.encode(
                         text,
                         BarcodeFormat.QR_CODE,

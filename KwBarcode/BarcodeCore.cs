@@ -486,6 +486,34 @@ namespace KwBarcode
             return word;
         }
 
+        public static long Text256ToLong(string text)
+        {
+            long ret = 0;
+            byte[] textBytes = Encoding.ASCII.GetBytes(text);
+            int maxIndex = textBytes.Length < 4 ? textBytes.Length : 4;
+            for (int i = 0; i < 4; i++)
+            {
+                if (i >= maxIndex)
+                {
+                    ret = ret | (32L << i * 8);
+                }
+                else
+                {
+                    ret = ret | ((long)textBytes[i] << i * 8);
+                }
+            }
+            return ret;
+        }
+
+        public static string IntToText256(int value)
+        {
+            Encoding encoder = Encoding.ASCII;
+            string word = "";
+            byte[] intBytes = BitConverter.GetBytes(value);
+            word = encoder.GetString(intBytes);
+            return word;
+        }
+
         /// <summary>
         /// 轉換 7-bit (英數字含標點) 為整數，最大為 4 個字 (28-bit)
         /// </summary>

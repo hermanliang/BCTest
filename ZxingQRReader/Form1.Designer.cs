@@ -91,7 +91,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(423, 22);
             this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "Test QRCode";
+            this.textBox1.Text = "QRCode Test!";
             // 
             // saveFileDialog1
             // 

@@ -29,6 +29,7 @@ namespace ZxingQRReader
             {   
                 Bitmap image = new Bitmap(openFileDialog1.FileName);
                 reader.decode(image);
+                
                 txResult.Text = reader.Text;
                 pictureBox2.Image = image;
             }
@@ -38,7 +39,25 @@ namespace ZxingQRReader
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                //Encoding encoder = Encoding.ASCII;
+                //string msgText = encoder.GetString(new byte[] { 0x01, 0x00, 0x02, 0x03 });
+
                 writer.encodeAndSave(textBox1.Text, saveFileDialog1.FileName);
+
+                //writer.encodeAndSave(
+                //    "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789" + // 320bit
+                //    "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789" + // 640
+                //    "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789" + // 960
+                //    "0123456789"
+                //    , saveFileDialog1.FileName);
+
+                //writer.encodeAndSave(
+                //    "ABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJ" +
+                //    "ABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJABCDEFGHIJ" +
+                //    "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij"
+                //    , saveFileDialog1.FileName);
+
+                //writer.encodeAndSave(msgText, saveFileDialog1.FileName);
             }
         }
     }

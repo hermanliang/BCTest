@@ -81,7 +81,7 @@ namespace com.google.zxing.qrcode.encoder
 			{
 				encoding = DEFAULT_BYTE_MODE_ENCODING;
 			}
-			
+
 			// Step 1: Choose the mode (encoding).
 			Mode mode = chooseMode(content, encoding);
 			
