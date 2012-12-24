@@ -97,6 +97,7 @@ namespace KwBarcode
         private Result ProcessQRReader(Bitmap image)
         {
             image = preProcessImage(image);
+            //image = new Bitmap("d:\\AMA_QR.bmp");
             LuminanceSource ls = new RGBLuminanceSource(image, image.Width, image.Height);
             Binarizer hb = new HybridBinarizer(ls);
             Result result = null;
@@ -135,8 +136,8 @@ namespace KwBarcode
             int minLen = int.MaxValue;
             minLen = minLen > image.Height ? image.Height : minLen;
             minLen = minLen > image.Width ? image.Width : minLen;
-            if (minLen > 256)
-            {
+            //if (minLen > 256)
+            //{
                 image = new Bitmap(
                     image,
                     new Size(
@@ -144,7 +145,7 @@ namespace KwBarcode
                         (int)((double)image.Height / minLen * 256)
                     )
                 );
-            }
+            //}
             return image;
         }
     }
