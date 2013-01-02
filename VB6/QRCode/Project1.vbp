@@ -1,7 +1,7 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Reference=*\G{BDDA171C-4BCB-4B9C-AB45-BD72CC37595E}#1.0#0#..\..\KwBarcode\bin\Debug\KwBarcode.tlb#KwBarcode
-Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; COMDLG32.OCX
+Reference=*\G{BDDA171C-4BCB-4B9C-AB45-BD72CC37595E}#1.0#0#..\..\..\..\..\..\GlobalDll\KwBarcode.tlb#KwBarcode
+Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; comdlg32.ocx
 Form=Form1.frm
 Startup="Form1"
 ExeName32="Project1.exe"

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form Form1 
    Caption         =   "Form1"
    ClientHeight    =   3030
@@ -82,9 +82,9 @@ Attribute VB_Exposed = False
 '
 ' * 開發者設定:
 '       選單->專案->設定引用項目->瀏覽->KwBarcode.tlb (查詢方法: 檢視->瀏覽物件->搜尋 KwQRCodeReader, KwQRCodeWriter)
-'       將 KwBarcode.dll, zxing.dll 放置於 D:\GlobalDll
-'       編輯 Windows 環境變數，將 D:\GlobalDll 新增至 PATH 變數內 (讓執行階段可以 Access 到 KwBarcode.dll, zxing.dll)
-'       註冊 KwBarcode.dll 至系統中
+'       將 KwBarcode.dll, zxing.dll 放置於相同目錄下
+'       以codebase方式 註冊 KwBarcode.dll 至系統中
+'       RegAsm KwBarcode.dll /codebase
 '
 ' * Comdlg.ocx not registered issue:
 '       將 Comdlg32.ocx copy 至 C:\Windows\System32\ 資料夾

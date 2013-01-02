@@ -17,6 +17,7 @@ using com.google.zxing.qrcode;
 
 namespace KwBarcode
 {
+    [ComVisible(true)]
     [Guid("3E73EE86-F46D-411D-BE6F-87060B7E6E6A")]
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [ProgId("KwQRCodeReader")]
@@ -50,8 +51,11 @@ namespace KwBarcode
         }
 
         public void decode()
-        {   
-            Bitmap image = new Bitmap(filePath);
+        {
+            //Bitmap image = new Bitmap(filePath);
+            StreamReader reader = new StreamReader(filePath);
+            Bitmap image = new Bitmap(reader.BaseStream);
+            reader.Close();
             decode(image);
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,12 +27,18 @@ namespace ZxingQRReader
         private void button1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {   
-                Bitmap image = new Bitmap(openFileDialog1.FileName);
+            {
+                //Bitmap image = new Bitmap(openFileDialog1.FileName);
+                StreamReader streamReader = new StreamReader(openFileDialog1.FileName);
+                Bitmap image = new Bitmap(streamReader.BaseStream);
+                streamReader.Close();
                 reader.decode(image);
+                //reader.FilePath = openFileDialog1.FileName;
+                //reader.decode();
                 
                 txResult.Text = reader.Text;
                 pictureBox2.Image = image;
+                
             }
         }
 
