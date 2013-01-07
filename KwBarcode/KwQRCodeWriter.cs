@@ -4,23 +4,34 @@ using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Collections;
 using com.google.zxing;
 using com.google.zxing.common;
 using com.google.zxing.qrcode;
 using com.google.zxing.qrcode.decoder;
+using EncodeHintType = com.google.zxing.EncodeHintType;
+using ErrorCorrectionLevel = com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 namespace KwBarcode
 {
+    public enum QR_CORRECT_LEV
+    {
+        L,
+        M,
+        Q,
+        H,
+    };
+
     [Guid("69F37639-F632-433F-AA01-1BC326FD1D6F")]
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [ProgId("KwQRCodeWriter")]
     public class KwQRCodeWriter:IQRCode
     {
-        private QRCodeWriter writer;
+        static private QRCodeWriter writer = null;
         private string filePath = "";
         private string text = "";
         byte[] rawByte = null;
-        private int size = 256;
+        static private int size = 256;
 
         public KwQRCodeWriter()
         {
@@ -51,10 +62,15 @@ namespace KwBarcode
 
         public void encodeAndSave(string text, string path)
         {
+            encodeAndSave(text, path, QR_CORRECT_LEV.L);
+        }
+
+        public void encodeAndSave(string text, string path, QR_CORRECT_LEV correctLev)
+        {
             try
             {
                 this.filePath = path;
-                textToQRImage(text).Save(path, ImageFormat.Bmp);                
+                textToQRImage(text, correctLev).Save(path, ImageFormat.Bmp);
             }
             catch (Exception ex)
             {
@@ -62,15 +78,41 @@ namespace KwBarcode
             }
         }
 
-        public Bitmap textToQRImage(string text)
+        static public Bitmap textToQRImage(string text)
+        {
+            return textToQRImage(text, QR_CORRECT_LEV.L);
+        }
+
+        static public Bitmap textToQRImage(string text, QR_CORRECT_LEV correctLev)
         {
             try
-            {   
+            {
+                if (writer == null) writer = new QRCodeWriter();
+                Hashtable hints = new Hashtable();
+                switch (correctLev)
+                {
+                    case QR_CORRECT_LEV.L:
+                        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.L;
+                        break;
+                    case QR_CORRECT_LEV.M:
+                        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.M;
+                        break;
+                    case QR_CORRECT_LEV.Q:
+                        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.Q;
+                        break;
+                    case QR_CORRECT_LEV.H:
+                        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H;
+                        break;
+                    default:
+                        hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.L;
+                        break;
+                }
                 ByteMatrix byteMatrix = writer.encode(
                         text,
                         BarcodeFormat.QR_CODE,
-                        this.size,
-                        this.size);
+                        size,
+                        size,
+                        hints);
 
                 return byteMatrix.ToBitmap();
             }

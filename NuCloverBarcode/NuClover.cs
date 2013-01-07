@@ -368,7 +368,7 @@ namespace NuCloverBarcode
         {
             if (BC == null || BC.Equals(""))
                 return null;
-            return writer.textToQRImage(BC);
+            return  KwQRCodeWriter.textToQRImage(BC);
         }
 
         #endregion
@@ -441,7 +441,7 @@ namespace NuCloverBarcode
                     //    BC += barcode;
                     //}
                     //mBarcodeImage = Code128Rendering.MakeBarcodeImage(BC, 5, true);
-                    mQRCodeImage = writer.textToQRImage(BC);
+                    mQRCodeImage = KwQRCodeWriter.textToQRImage(BC);
                 }
                 else
                 {
