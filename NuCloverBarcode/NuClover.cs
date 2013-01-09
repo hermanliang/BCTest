@@ -42,7 +42,7 @@ namespace NuCloverBarcode
         long[] lConcs = new long[5];
         private long lTBandAppear = 1;
 
-        private const int blockSize = 20;
+        private const int blockSize = 72;
 
         private long[] data;
         private int[] bits;
@@ -439,7 +439,7 @@ namespace NuCloverBarcode
                         bcBytes[i * 4 + 2] = codeBytes[2];
                         bcBytes[i * 4 + 3] = codeBytes[3];
                     }
-                    mQRCodeImage = KwQRCodeWriter.textToQRImage(BC, QR_CORRECT_LEV.M);
+                    mQRCodeImage = KwQRCodeWriter.textToQRImage(BC, QR_CORRECT_LEV.L);
 #if DEBUG
                     int[] retData = BarcodeCore.BarcodeDecoder(BC, bits);
                     byte[] dataBytes;

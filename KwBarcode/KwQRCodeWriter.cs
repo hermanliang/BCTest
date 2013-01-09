@@ -31,7 +31,7 @@ namespace KwBarcode
         private string filePath = "";
         private string text = "";
         byte[] rawByte = null;
-        static private int size = 256;
+        static private int size = 1024;
 
         public KwQRCodeWriter()
         {
