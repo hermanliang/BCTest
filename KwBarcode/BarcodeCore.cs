@@ -569,7 +569,7 @@ namespace KwBarcode
         }
 
         public static long FloatToLong(float value)
-        {
+        {   
             byte[] fByte = BitConverter.GetBytes(value);
             long ret = BitConverter.ToUInt32(fByte, 0);            
             return ret;
@@ -590,6 +590,35 @@ namespace KwBarcode
                 table[numberText[i]] = i;
             }
             return table;
+        }
+
+        static public byte[] float16ToBytes(double value)
+        {
+            ushort v = EncodeFloat16(value);
+            return BitConverter.GetBytes(v);
+        }
+
+        static public ushort EncodeFloat16(double value)
+        {
+            int cnt = 0;
+            while (Math.Round(value * 8) < 4096 && value != 0)
+            {
+                value *= 8;
+                cnt++;
+            }
+            return (ushort)((cnt << 12) + (int)Math.Round(value));
+        }
+
+        static public double DecodeFloat16(ushort value)
+        {
+            int cnt = value >> 12;
+            double result = value & 0xfff;
+            while (cnt > 0)
+            {
+                result /= 8;
+                cnt--;
+            }
+            return result;
         }
 
         #endregion

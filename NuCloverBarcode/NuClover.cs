@@ -4,126 +4,103 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using KwBarcode;
-using GenCode128;
 
 namespace NuCloverBarcode
 {
     public partial class NuClover : Form
     {
-        private KwQRCodeWriter writer;
         private Bitmap mImage = null;
-        private Image mBarcodeImage = null;
+        private Size imgSize;
         private Bitmap mQRCodeImage = null;
+        private FlowLayoutPanel[] ItemFlowPanels;
+        private Panel[] ItemPanels;
         private Panel[] RCPanels;
+
         private TextBox[] RLUs, Concs;
         private int
             mCco,
             mTco,            
             mLb,
+            mRb,
             mTb,
             mTw,
             mTh,
-            mTi;
+            mTi,
+            mRows,
+            mLines;
         private float
             mTCoC
             ;
 
         private string mTn;
-        float[] fRLUs = new float[8];
-        float[] fConcs = new float[8];
-        long[] lRLUs = new long[8];
-        long[] lConcs = new long[8];
-        private long
-            lVer = 0,
-            lPID1, lPID2, lPID3, lPID4, lPID5,
-            lPLot1, lPLot2, lPLot3,
-            lExpireDate1, lExpireDate2,
-            lLb,
-            lTb,
-            lTw,
-            lTh,
-            lTi,
-            lCco,
-            lTBandAppear = 1,
-            lUnit,
-            lTn,
-            lTco,
-            lTcoC,
-            lRluConcPts = 3
-            ;
-            
+        float[] fRLUs = new float[5];
+        float[] fConcs = new float[5];
+        long[] lRLUs = new long[5];
+        long[] lConcs = new long[5];
+        private long lTBandAppear = 1;
 
-        private int[] bits = {
-            6, // Version 0-63
-            32, 32, 32, 32, 32, // Product ID
-            32, 32, 32, // Product Lot
-            32, 32, // Expireation Date
-            8, // Left Bound
-            8, // Top Bound
-            6, // Target Width
-            6, // Target Height
-            8, // Target Interval
-            8, // Invalid Threshold (C cut-off)
-            1, // T Band Appears
-            5, // Concentration Unit
-            32, // T-Line Name
-            8, // T cut-off RLU
-            32, // T cut-off Concentration
-            3,  // RLU-Conc. Points
-            32, 32, // RLU-Conc. 1
-            32, 32, // RLU-Conc. 2
-            32, 32, // RLU-Conc. 3
-            32, 32, // RLU-Conc. 4
-            32, 32, // RLU-Conc. 5
-            32, 32, // RLU-Conc. 6
-            32, 32, // RLU-Conc. 7
-            32, 32 // RLU-Conc. 8
-        };
+        private const int blockSize = 20;
+
+        private long[] data;
+        private int[] bits;
 
         public NuClover()
         {
             InitializeComponent();
+
+            bits = new int[blockSize];
+            for (int i = 0; i < bits.Length; i++) bits[i] = 32;
+            //bits[blockSize - 1] = 24;
+
             String theVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.Text = "NuClover Barcode Generator (v." + theVersion + ")";
 
-            writer = new KwQRCodeWriter();
-            TxTb.TextChanged += onTargetParamChanged;
-            TxLb.TextChanged += onTargetParamChanged;
-            TxTw.TextChanged += onTargetParamChanged;
-            TxTh.TextChanged += onTargetParamChanged;
-            TxTi.TextChanged += onTargetParamChanged;
-            CBConcUnit.SelectedIndex = 0;
+            ItemFlowPanels = new FlowLayoutPanel[]{
+                flowItem1,
+                flowItem2,
+                flowItem3,
+                flowItem4,
+                flowItem5,
+                flowItem6};
+            ItemPanels = new Panel[]{
+                panelItem1,
+                panelItem2,
+                panelItem3,
+                panelItem4,
+                panelItem5,
+                panelItem6};
             RCPanels = new Panel[]{
                 RCPanel1,
                 RCPanel2,
                 RCPanel3,
                 RCPanel4,
-                RCPanel5,
-                RCPanel6,
-                RCPanel7,
-                RCPanel8};
+                RCPanel5};
             RLUs = new TextBox[]{
-                txRLU1,
-                txRLU2,
-                txRLU3,
-                txRLU4,
-                txRLU5,
-                txRLU6,
-                txRLU7,
-                txRLU8};
+                txT1RLU1,
+                txT1RLU2,
+                txT1RLU3,
+                txT1RLU4,
+                txT1RLU5};
             Concs = new TextBox[]{
-                txConc1,
-                txConc2,
-                txConc3,
-                txConc4,
-                txConc5,
-                txConc6,
-                txConc7,
-                txConc8};
+                txT1Conc1,
+                txT1Conc2,
+                txT1Conc3,
+                txT1Conc4,
+                txT1Conc5};
+
+            TxTb.TextChanged += onTargetParamChanged;
+            TxLb.TextChanged += onTargetParamChanged;
+            TxRb.TextChanged += onTargetParamChanged;
+            TxTw.TextChanged += onTargetParamChanged;
+            TxTh.TextChanged += onTargetParamChanged;
+            TxTi.TextChanged += onTargetParamChanged;
+            TxRows.TextChanged += onTargetParamChanged;
+            TxLines.TextChanged += onTargetParamChanged;
+            CBConcUnit.SelectedIndex = 0;
+            
 
             generateBarcodeImage(this, new EventArgs());
         }
@@ -146,7 +123,7 @@ namespace NuCloverBarcode
                 Rectangle[] rect = getTargetRect();
                 Graphics g1 = Graphics.FromImage(retImage);
                 Pen p = new Pen(Color.Red);
-                p.Width = 3;
+                p.Width = 2;
                 g1.DrawRectangles(p, rect);
             }
 
@@ -182,10 +159,7 @@ namespace NuCloverBarcode
                     }
                     catch (Exception ex)
                     {
-                        if (i <= lRluConcPts)
-                        {
-                            throw ex;
-                        }
+                        throw ex;
                     }
                 }
             }
@@ -204,11 +178,23 @@ namespace NuCloverBarcode
             try
             {
                 mLb = int.Parse(TxLb.Text);
+                mRb = int.Parse(TxRb.Text);
                 mTb = int.Parse(TxTb.Text);
                 mTw = int.Parse(TxTw.Text);
                 mTh = int.Parse(TxTh.Text);
                 mTi = int.Parse(TxTi.Text);
-                if (mLb < 100 || mLb > 355|| mTb < 100 || mTb > 355) throw new Exception("mLb, mTb < 100");
+                mRows = int.Parse(TxRows.Text);
+                mLines = int.Parse(TxLines.Text);
+                if (mLb < 0 || mLb > 255|| mTb < 0 || mTb > 255) throw new Exception("mLb, mTb < 100");
+                if (mRb < 0 || mRb > 255) throw new Exception();
+                if (mTw < 0 || mTw > 255 || mTh < 0 || mTh > 255 || mTi < 0 || mTi > 255) throw new Exception("Target bound error");
+                if (mRows < 1 || mLines < 2 || mLines > 6) throw new Exception();
+                for (int i = 0; i < ItemPanels.Length; i++)
+                {
+                    if (i < mRows * (mLines - 1)) ItemPanels[i].Visible = true;
+                    else ItemPanels[i].Visible = false;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -221,64 +207,82 @@ namespace NuCloverBarcode
 
         private void convertAllDataToLong()
         {
-            long dateTime = dateTimePicker1.Value.Ticks;
-            string[] prodID = splitString4char(txProdId.Text, 5);
-            lPID1 = BarcodeCore.Text256ToLong(prodID[0]);
-            lPID2 = BarcodeCore.Text256ToLong(prodID[1]);
-            lPID3 = BarcodeCore.Text256ToLong(prodID[2]);
-            lPID4 = BarcodeCore.Text256ToLong(prodID[3]);
-            lPID5 = BarcodeCore.Text256ToLong(prodID[4]);
-            string[] prodLot = splitString4char(txProdLot.Text, 3);
-            lPLot1 = BarcodeCore.Text256ToLong(prodLot[0]);
-            lPLot2 = BarcodeCore.Text256ToLong(prodLot[1]);
-            lPLot3 = BarcodeCore.Text256ToLong(prodLot[2]);
-            lExpireDate1 = dateTime & 0xFFFFFFFF;
-            lExpireDate2 = (dateTime >> 32) & 0xFFFFFFFF;
-            lCco = (long)mCco;
-            lTco = (long)mTco;
-            lTn = BarcodeCore.TextToLong(mTn);
-            lLb = (long)(mLb - 100);
-            lTw = (long)mTw;
-            lTh = (long)mTh;
-            lTi = (long)mTi;
-            lTb = (long)(mTb - 100);
-            lUnit = CBConcUnit.SelectedIndex;
-            lTcoC = BarcodeCore.FloatToLong(mTCoC);
+            data = new long[blockSize];
+            byte[] dataBytes = new byte[4];
+            // 0: [Version, Concentration Unit, null, T Band Appears]
+            dataBytes[0] = 0;
+            dataBytes[1] = (byte)CBConcUnit.SelectedIndex;
 
+            dataBytes[3] = (byte)lTBandAppear;
+            data[0] = dataBytes2Long(dataBytes);
+
+            // 1 - 5: Product ID
+            string[] prodID = splitString4char(txProdId.Text, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                data[i + 1] = BarcodeCore.Text256ToLong(prodID[i]);
+            }
+
+            // 6 - 8: Product Lot
+            string[] prodLot = splitString4char(txProdLot.Text, 3);
+            for (int i = 0; i < 3; i++)
+            {
+                data[i + 6] = BarcodeCore.Text256ToLong(prodLot[i]);
+            }
+
+            // 9: Expiration Date
+            DateTime dateTime = dateTimePicker1.Value;
+            dataBytes = new byte[4];
+            dataBytes[0] = (byte)dateTime.Day;
+            dataBytes[1] = (byte)dateTime.Month;
+            byte[] expYear = BitConverter.GetBytes(dateTime.Year);
+            dataBytes[2] = expYear[0];
+            dataBytes[3] = expYear[1];
+            data[9] = dataBytes2Long(dataBytes);
+
+            // 10: [Left Bound, Top Bound, Target Width, Target Height]
+            dataBytes = new byte[4];
+            dataBytes[0] = (byte)mLb;
+            dataBytes[1] = (byte)mTb;
+            dataBytes[2] = (byte)mTw;
+            dataBytes[3] = (byte)mTh;
+            data[10] = dataBytes2Long(dataBytes);
+
+            // 11: [Right Bound, Target C-T Interval, Target T-T Interval, Invalid Threshold (C Cutoff)]
+            dataBytes = new byte[4];
+            dataBytes[0] = (byte)mRb;
+            dataBytes[1] = (byte)mTi;
+            dataBytes[2] = (byte)mTi;
+            dataBytes[3] = (byte)mCco;
+            data[11] = dataBytes2Long(dataBytes);
+
+            // 12: [Rows, Lines, T1 Cutoff RLU, T2 Cutoff RLU]
+            dataBytes = new byte[4];
+            dataBytes[0] = (byte)mRows;
+            dataBytes[1] = (byte)mLines;
+            dataBytes[2] = (byte)mTco;
+
+            data[12] = dataBytes2Long(dataBytes);
+
+            // 13: T1 Cutoff Concentration
+            data[13] = BarcodeCore.FloatToLong(mTCoC);
+
+            // 14: T1 Name
+            data[14] = BarcodeCore.Text256ToLong(mTn);
+
+            // 15 - 19: T1 RLU-Concentration Pairs x 5
             for (int i = 0; i < fRLUs.Length; i++)
             {
-                lRLUs[i] = BarcodeCore.FloatToLong(fRLUs[i]);
-                lConcs[i] = BarcodeCore.FloatToLong(fConcs[i]);
+                dataBytes = new byte[4];
+                byte[] tmpRLU = BarcodeCore.float16ToBytes(fRLUs[i]);
+                byte[] tmpConc = BarcodeCore.float16ToBytes(fConcs[i]);
+                dataBytes[0] = tmpRLU[0];
+                dataBytes[1] = tmpRLU[1];
+                dataBytes[2] = tmpConc[0];
+                dataBytes[3] = tmpConc[1];
+                data[i + 15] = dataBytes2Long(dataBytes);
             }
-        }
 
-        private string[] splitString4char(string text, int blocks)
-        {
-            string[] retValue = new string[blocks];
-            for (int i = 0; i < blocks; i++)
-            {
-                retValue[i] = "";
-                try
-                {
-                    if (text.Length > 4)
-                    {
-                        retValue[i] = text.Substring(0, 4);
-                        text = text.Substring(4);
-                    }
-                    else if (text.Length == 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        retValue[i] = text;
-                        text = "";
-                    }
-
-                }
-                catch { continue; }
-            }
-            return retValue;
         }
 
         private void errScanning(int type)
@@ -292,26 +296,48 @@ namespace NuCloverBarcode
                     catch { LbTco.ForeColor = Color.Red; }
                     try { mTn = TxTn.Text; }
                     catch { LbTn.ForeColor = Color.Red; }
+                    for (int i = 0; i < fRLUs.Length; i++)
+                    {
+                        try
+                        {
+                            fRLUs[i] = float.Parse(RLUs[i].Text);
+                            fConcs[i] = float.Parse(Concs[i].Text);
+                        }
+                        catch
+                        {
+                            ItemFlowPanels[0].BackColor = Color.Red;
+                        }
+                    }
                     break;
 
                 case 1:
                     try
                     {
                         mLb = int.Parse(TxLb.Text);
-                        if (mLb < 100 || mLb > 355) throw new Exception();
+                        if (mLb < 0 || mLb > 255) throw new Exception();
                     }
                     catch { LbLb.ForeColor = Color.Red; }
                     try
                     {
                         mTb = int.Parse(TxTb.Text);
-                        if (mTb < 100 || mTb > 355) throw new Exception();
+                        if (mTb < 0 || mTb > 255) throw new Exception();
                     }
                     catch { LbTb.ForeColor = Color.Red; }
-                    try { mTw = int.Parse(TxTw.Text); }
+                    try {
+                        mTw = int.Parse(TxTw.Text);
+                        if (mTw < 0 || mTw > 255) throw new Exception();
+                    }
                     catch { LbTw.ForeColor = Color.Red; }
-                    try { mTh = int.Parse(TxTh.Text); }
+                    try {
+                        mTh = int.Parse(TxTh.Text);
+                        if (mTh < 0 || mTh > 255) throw new Exception();
+                    }
                     catch { LbTh.ForeColor = Color.Red; }
-                    try { mTi = int.Parse(TxTi.Text); }
+                    try
+                    {
+                        mTi = int.Parse(TxTi.Text);
+                        if (mTi < 0 || mTi > 255) throw new Exception();
+                    }
                     catch { LbTi.ForeColor = Color.Red; }
                     
                     break;
@@ -327,6 +353,15 @@ namespace NuCloverBarcode
                     LbCco.ForeColor = Color.Black;
                     LbTco.ForeColor = Color.Black;
                     LbTn.ForeColor = Color.Black;
+                    if (ItemPanels != null)
+                    {
+                        for (int i = 0; i < ItemPanels.Length; i++)
+                        {
+                            if (i % 2 == 0) ItemFlowPanels[i].BackColor = Color.LightGray;
+                            else ItemFlowPanels[i].BackColor = Color.WhiteSmoke;
+                        }
+                    }
+
                     break;
 
                 case 1:
@@ -342,33 +377,26 @@ namespace NuCloverBarcode
 
         private Rectangle[] getTargetRect()
         {
-            int lineNum = 0;
+            //int lineNum = 0;
             Rectangle[] rect = null;
-            switch (lineNum)
-            {
-                case 0:
-                    rect = new Rectangle[2];
-                    rect[0] = new Rectangle(mLb, mTb, mTw, mTh);
-                    rect[1] = new Rectangle(mLb, mTb + mTi, mTw, mTh);
-                    break;
-                case 1:
-                    rect = new Rectangle[4];
-                    rect[0] = new Rectangle(mLb, mTb, mTw, mTh);
-                    rect[1] = new Rectangle(mLb, mTb + mTi, mTw, mTh);
-                    rect[2] = new Rectangle(mLb, mTb + mTi * 2, mTw, mTh);
-                    rect[3] = new Rectangle(mLb, mTb + mTi * 3, mTw, mTh);
-                    break;
-
-            }
+            rect = new Rectangle[mRows * mLines];
+            int leftBound = (int)((double)imgSize.Width / 2 - ((double)mLb / 255) * ((double)imgSize.Width / 2));
+            int rightBound = (int)((double)imgSize.Width / 2 + ((double)mRb / 255) * ((double)imgSize.Width / 2));
+            int topBound = (int)((double)imgSize.Height / 255 * mTb);
+            double rowInterval = 0;
+            if (mRows > 1)
+                rowInterval = (double)(rightBound - leftBound - mTw * mRows) / (mRows - 1);
+            for (int i = 0 ; i < mRows; i++)
+                for (int j = 0; j < mLines; j++)
+                {
+                    rect[i * mLines + j] = new Rectangle(
+                        leftBound + (int)((mTw + rowInterval) * i),
+                        topBound + mTi * j,
+                        mTw,
+                        mTh);
+                }
 
             return rect;
-        }
-
-        private Bitmap generateQRCodeImage(string BC)
-        {
-            if (BC == null || BC.Equals(""))
-                return null;
-            return  KwQRCodeWriter.textToQRImage(BC);
         }
 
         #endregion
@@ -380,6 +408,7 @@ namespace NuCloverBarcode
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 mImage = new Bitmap(openFileDialog1.FileName);
+                imgSize = mImage.Size;
                 pictureBox2.Image = drawTargetZoneOnImage(mImage);
 
             }
@@ -395,33 +424,7 @@ namespace NuCloverBarcode
             if (gatherAllData())
             {
                 convertAllDataToLong();
-                long[] values = {
-                    lVer,
-                    lPID1, lPID2, lPID3, lPID4, lPID5,
-                    lPLot1, lPLot2, lPLot3,
-                    lExpireDate1, lExpireDate2,
-                    lLb,
-                    lTb,
-                    lTw,
-                    lTh,
-                    lTi,
-                    lCco,
-                    lTBandAppear,
-                    lUnit,
-                    lTn,
-                    lTco,
-                    lTcoC,
-                    lRluConcPts,
-                    lRLUs[0], lConcs[0],
-                    lRLUs[1], lConcs[1],
-                    lRLUs[2], lConcs[2],
-                    lRLUs[3], lConcs[3],
-                    lRLUs[4], lConcs[4],
-                    lRLUs[5], lConcs[5],
-                    lRLUs[6], lConcs[6],
-                    lRLUs[7], lConcs[7]
-                };
-                List<string> barcodes = BarcodeCore.BarcodeEncoder(bits, values);
+                List<string> barcodes = BarcodeCore.BarcodeEncoder(bits, data);
                 string BC = "";
                 if (barcodes != null)
                 {
@@ -436,39 +439,87 @@ namespace NuCloverBarcode
                         bcBytes[i * 4 + 2] = codeBytes[2];
                         bcBytes[i * 4 + 3] = codeBytes[3];
                     }
-                    //foreach (string barcode in barcodes)
-                    //{
-                    //    BC += barcode;
-                    //}
-                    //mBarcodeImage = Code128Rendering.MakeBarcodeImage(BC, 5, true);
-                    mQRCodeImage = KwQRCodeWriter.textToQRImage(BC);
+                    mQRCodeImage = KwQRCodeWriter.textToQRImage(BC, QR_CORRECT_LEV.M);
+#if DEBUG
+                    int[] retData = BarcodeCore.BarcodeDecoder(BC, bits);
+                    byte[] dataBytes;
+                    // 0: [Version, Concentration Unit, RLU-Conc Points, T Band Appears]
+                    dataBytes = int2DataBytes(retData[0]);
+                    int dVersion = dataBytes[0];
+                    int dConcUnit = dataBytes[1];
+                    //int dRLUConcPts = dataBytes[2];
+                    int dTband = dataBytes[3];
+
+                    // 1 - 5: Product ID
+                    string dProdID = "";
+                    for (int i = 1; i < 6; i++)                    
+                    {
+                        dProdID += BarcodeCore.IntToText256(retData[i]);
+                    }
+
+                    // 6 - 8: Product Lot
+                    string dProdLot = "";
+                    for (int i = 6; i < 9; i++)
+                    {
+                        dProdLot += BarcodeCore.IntToText256(retData[i]);
+                    }
+
+                    // 9: Expiration Date
+                    dataBytes = int2DataBytes(retData[9]);
+                    int dDay = dataBytes[0];
+                    int dMonth = dataBytes[1];
+                    int dYear = BitConverter.ToUInt16(dataBytes, 2);
+
+                    // 10: [Left Bound, Top Bound, Target Width, Target Height]
+                    dataBytes = int2DataBytes(retData[10]);
+                    int dLb = dataBytes[0];
+                    int dTb = dataBytes[1];
+                    int dTw = dataBytes[2];
+                    int dTh = dataBytes[3];
+
+                    // 11: [Right Bound, Target C-T Interval, Target T-T Interval, Invalid Threshold (C Cutoff)]
+                    dataBytes = int2DataBytes(retData[11]);
+                    int dRb = dataBytes[0];
+                    int dTCTi = dataBytes[1];
+                    int dTTTi = dataBytes[2];
+                    int dCco = dataBytes[3];
+
+                    // 12: [Rows, Lines, T1 Cutoff RLU, T2 Cutoff RLU]
+                    dataBytes = int2DataBytes(retData[12]);
+                    int dRows = dataBytes[0];
+                    int dLines = dataBytes[1];
+                    int dTco = dataBytes[2];
+
+                    // 13: T1 Cutoff Concentration
+                    float dTcoConc = BarcodeCore.IntToFloat(retData[13]);
+
+                    // 14: T1 Name
+                    string dTName = BarcodeCore.IntToText256(retData[14]);
+
+                    // 15 - 19: T1 RLU-Concentration Pairs x 4
+                    double[] dRLU = new double[5];
+                    double[] dConc = new double[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        dataBytes = int2DataBytes(retData[15 + i]);
+                        dRLU[i] = BarcodeCore.DecodeFloat16(BitConverter.ToUInt16(dataBytes,0));
+                        dConc[i] = BarcodeCore.DecodeFloat16(BitConverter.ToUInt16(dataBytes, 2));
+                        Console.WriteLine(dRLU[i].ToString() + "\t" + dConc[i].ToString());
+                    }
+                    Console.WriteLine("Check Complete!");
+
+#endif
                 }
                 else
                 {
-                    //mBarcodeImage = null;
                     mQRCodeImage = null;
                 }
             }
             else
             {
-                //mBarcodeImage = null;
                 mQRCodeImage = null;
             }
-            
-            //pictureBox1.Image = mBarcodeImage;
             pictureBox3.Image = mQRCodeImage;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (mBarcodeImage != null)
-            {
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    mBarcodeImage.Save(saveFileDialog1.FileName, ImageFormat.Bmp);
-                    MessageBox.Show("Complete", "Message");
-                }
-            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -501,28 +552,55 @@ namespace NuCloverBarcode
 
         #endregion
 
-        private void btnAddRC_Click(object sender, EventArgs e)
+        
+
+        static public long dataBytes2Long(byte[] dataBytes)
         {
-            lRluConcPts++;
-            lRluConcPts = lRluConcPts > 7 ? 7 : lRluConcPts;
-            RCPanels[lRluConcPts].Visible = true;
-            generateBarcodeImage(sender, e);
+            if (dataBytes == null) throw new Exception("Null target error!");
+            if (dataBytes.Length < 4)
+            {
+                byte[] tmpArray = new byte[4];
+                for (int i = 0; i < dataBytes.Length; i++) tmpArray[i] = dataBytes[i];
+                dataBytes = tmpArray;
+            }
+            return (long)BitConverter.ToUInt32(dataBytes, 0);
         }
 
-        private void btnRmRC_Click(object sender, EventArgs e)
+        static public byte[] int2DataBytes(int value)
         {
-            lRluConcPts--;
-            lRluConcPts = lRluConcPts < 1 ? 1 : lRluConcPts;
-            RCPanels[lRluConcPts + 1].Visible = false;
-            RLUs[lRluConcPts + 1].Text = "";
-            Concs[lRluConcPts + 1].Text = "";
-            lRLUs[lRluConcPts + 1] = 0;
-            lConcs[lRluConcPts + 1] = 0;
-            fRLUs[lRluConcPts + 1] = 0;
-            fConcs[lRluConcPts + 1] = 0;
-            generateBarcodeImage(sender, e);
+            return BitConverter.GetBytes(value);
         }
 
+        static public string[] splitString4char(string text, int blocks)
+        {
+            string[] retValue = new string[blocks];
+            for (int i = 0; i < blocks; i++)
+            {
+                retValue[i] = "";
+                try
+                {
+                    if (text.Length > 4)
+                    {
+                        retValue[i] = text.Substring(0, 4);
+                        text = text.Substring(4);
+                    }
+                    else if (text.Length == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        retValue[i] = text;
+                        text = "";
+                    }
+
+                }
+                catch { continue; }
+            }
+            return retValue;
+        }
+
+        
 
     }
 }
