@@ -21,22 +21,38 @@ namespace KwBarcode
     [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
     public interface mInterface
     {
+        [DispId(0x01)]
         string[] Barcodes { get; }
+        [DispId(0x02)]
         int[] inValues { get; }
+        [DispId(0x03)]
         int[] outValues { get; }
+        [DispId(0x04)]
         int[] Bits { get; }
         
+        [DispId(0x0100)]
         void addBit(int bit);
+        [DispId(0x0200)]
         void addValue(int value);
+        [DispId(0x0300)]
         void addBarcode(string barcode);
+        [DispId(0x0400)]
         bool setBarcodes(string barcodeStrings);
+        [DispId(0x0500)]
         int textToInt(string text);
+        [DispId(0x0600)]
         string intToText(int value);
+        [DispId(0x0700)]
         int text128ToInt(string text);
+        [DispId(0x0800)]
         string intToText128(int value);
+        [DispId(0x0900)]
         int floatToInt(float value);
+        [DispId(0x0A00)]
         float intToFloat(int value);
+        [DispId(0x0B00)]
         void initBarcodeEncoder();
+        [DispId(0x0C00)]
         void initBarcodeDecoder();
     }
 

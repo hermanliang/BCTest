@@ -50,6 +50,7 @@ namespace KwBarcode
             get { return rawByte; }
         }
 
+        [DispId(0x01000000)]
         public void decode()
         {
             //Bitmap image = new Bitmap(filePath);
@@ -58,7 +59,7 @@ namespace KwBarcode
             reader.Close();
             decode(image);
         }
-
+        [DispId(0x02000000)]
         public void decode(Bitmap image)
         {
             try
@@ -87,7 +88,7 @@ namespace KwBarcode
                 Console.WriteLine(ex.Message);
             }
         }
-
+        
         private Bitmap paddingImage(Bitmap image, int padSize)
         {
             Bitmap padImage = new Bitmap(image.Width + padSize * 2, image.Height + padSize * 2);
@@ -97,7 +98,7 @@ namespace KwBarcode
             g1.DrawImage(image, padSize, padSize);
             return padImage;
         }
-
+        
         private Result ProcessQRReader(Bitmap image)
         {
             image = preProcessImage(image);

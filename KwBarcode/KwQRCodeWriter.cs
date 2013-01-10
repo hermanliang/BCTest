@@ -43,7 +43,7 @@ namespace KwBarcode
             get { return filePath; }
             set { filePath = value; }
         }
-
+        [DispId(0x010000)]
         public int Size
         {
             get { return size; }
@@ -60,11 +60,19 @@ namespace KwBarcode
             get { return rawByte; }
         }
 
+        [DispId(0x01000000)]
         public void encodeAndSave(string text, string path)
         {
             encodeAndSave(text, path, QR_CORRECT_LEV.L);
         }
 
+        [DispId(0x02000000)]
+        public Bitmap textToQRImage(string text)
+        {
+            return textToQRImage(text, QR_CORRECT_LEV.L);
+        }
+
+        [DispId(0x03000000)]
         public void encodeAndSave(string text, string path, QR_CORRECT_LEV correctLev)
         {
             try
@@ -78,7 +86,7 @@ namespace KwBarcode
             }
         }
 
-        static public Bitmap textToQRImage(string text)
+        static public Bitmap textToQRImage2(string text)
         {
             return textToQRImage(text, QR_CORRECT_LEV.L);
         }
