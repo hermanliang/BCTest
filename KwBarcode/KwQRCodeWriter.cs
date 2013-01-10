@@ -22,10 +22,23 @@ namespace KwBarcode
         H = 3,
     };
 
+    [Guid("4182EA72-DBD2-491B-A659-DC3F4A05707D")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+    public interface IQRWriter
+    {
+        string FilePath { get; set; }
+        byte[] RawByte { get; }
+        string Text { get; }
+        int Size { get; set; }
+        void encodeAndSave(string text, string path);
+        Bitmap textToQRImage(string text);
+        void encodeAndSaveWithEC(string text, string path, int correctLev);
+    }
+
     [Guid("69F37639-F632-433F-AA01-1BC326FD1D6F")]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ClassInterface(ClassInterfaceType.None)]
     [ProgId("KwQRCodeWriter")]
-    public class KwQRCodeWriter:IQRCode
+    public class KwQRCodeWriter:IQRWriter
     {
         static private QRCodeWriter writer = null;
         private string filePath = "";
@@ -43,7 +56,7 @@ namespace KwBarcode
             get { return filePath; }
             set { filePath = value; }
         }
-        [DispId(0x010000)]
+
         public int Size
         {
             get { return size; }
@@ -60,7 +73,6 @@ namespace KwBarcode
             get { return rawByte; }
         }
 
-        [DispId(0x01000000)]
         public void encodeAndSave(string text, string path)
         {
             try
@@ -74,13 +86,11 @@ namespace KwBarcode
             }
         }
 
-        [DispId(0x02000000)]
         public Bitmap textToQRImage(string text)
         {
             return textToQRImage(text, QR_CORRECT_LEV.L);
         }
 
-        [DispId(0x03000000)]
         public void encodeAndSaveWithEC(string text, string path, int correctLev)
         {
             try

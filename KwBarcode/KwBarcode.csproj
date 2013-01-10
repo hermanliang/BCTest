@@ -72,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarcodeCore.cs" />
-    <Compile Include="IQRCode.cs" />
     <Compile Include="KwQRCodeReader.cs" />
     <Compile Include="KwQRCodeWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

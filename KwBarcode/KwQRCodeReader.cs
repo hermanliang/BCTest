@@ -17,11 +17,22 @@ using com.google.zxing.qrcode;
 
 namespace KwBarcode
 {
-    [ComVisible(true)]
+    [Guid("90A019A1-D080-4331-B20F-AD4504236398")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+    public interface IQRReader
+    {
+        string FilePath { get; set; }
+        byte[] RawByte { get; }
+        string Text { get; }
+        void decode();
+        void decode(Bitmap image);
+    }
+
+
     [Guid("3E73EE86-F46D-411D-BE6F-87060B7E6E6A")]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ClassInterface(ClassInterfaceType.None)]
     [ProgId("KwQRCodeReader")]
-    public class KwQRCodeReader : IQRCode
+    public class KwQRCodeReader : IQRReader
     {
         private QRCodeReader reader;
         private string filePath = "";
@@ -50,7 +61,6 @@ namespace KwBarcode
             get { return rawByte; }
         }
 
-        [DispId(0x01000000)]
         public void decode()
         {
             //Bitmap image = new Bitmap(filePath);
@@ -59,7 +69,7 @@ namespace KwBarcode
             reader.Close();
             decode(image);
         }
-        [DispId(0x02000000)]
+
         public void decode(Bitmap image)
         {
             try
