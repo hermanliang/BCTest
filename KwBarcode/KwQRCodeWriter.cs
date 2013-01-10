@@ -16,10 +16,10 @@ namespace KwBarcode
 {
     public enum QR_CORRECT_LEV
     {
-        L,
-        M,
-        Q,
-        H,
+        L = 0,
+        M = 1,
+        Q = 2,
+        H = 3,
     };
 
     [Guid("69F37639-F632-433F-AA01-1BC326FD1D6F")]
@@ -80,19 +80,19 @@ namespace KwBarcode
             return textToQRImage(text, QR_CORRECT_LEV.L);
         }
 
-        //[DispId(0x03000000)]
-        //public void encodeAndSaveWithEC(string text, string path, QR_CORRECT_LEV correctLev)
-        //{
-        //    try
-        //    {
-        //        this.filePath = path;
-        //        textToQRImage(text, correctLev).Save(path, ImageFormat.Bmp);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
+        [DispId(0x03000000)]
+        public void encodeAndSaveWithEC(string text, string path, int correctLev)
+        {
+            try
+            {
+                this.filePath = path;
+                textToQRImage(text, (QR_CORRECT_LEV)correctLev).Save(path, ImageFormat.Bmp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         static public Bitmap textToQRImage2(string text)
         {
