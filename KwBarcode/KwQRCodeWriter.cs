@@ -63,7 +63,15 @@ namespace KwBarcode
         [DispId(0x01000000)]
         public void encodeAndSave(string text, string path)
         {
-            encodeAndSave(text, path, QR_CORRECT_LEV.L);
+            try
+            {
+                this.filePath = path;
+                textToQRImage(text, QR_CORRECT_LEV.L).Save(path, ImageFormat.Bmp);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         [DispId(0x02000000)]
@@ -72,19 +80,19 @@ namespace KwBarcode
             return textToQRImage(text, QR_CORRECT_LEV.L);
         }
 
-        [DispId(0x03000000)]
-        public void encodeAndSave(string text, string path, QR_CORRECT_LEV correctLev)
-        {
-            try
-            {
-                this.filePath = path;
-                textToQRImage(text, correctLev).Save(path, ImageFormat.Bmp);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
+        //[DispId(0x03000000)]
+        //public void encodeAndSaveWithEC(string text, string path, QR_CORRECT_LEV correctLev)
+        //{
+        //    try
+        //    {
+        //        this.filePath = path;
+        //        textToQRImage(text, correctLev).Save(path, ImageFormat.Bmp);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
 
         static public Bitmap textToQRImage2(string text)
         {
