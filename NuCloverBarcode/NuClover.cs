@@ -42,7 +42,7 @@ namespace NuCloverBarcode
         long[] lConcs = new long[5];
         private long lTBandAppear = 1;
 
-        private const int blockSize = 72;
+        private const int blockSize = 20;
 
         private long[] data;
         private int[] bits;

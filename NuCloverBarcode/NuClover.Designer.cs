@@ -263,19 +263,20 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(127, 65);
+            this.dateTimePicker1.Location = new System.Drawing.Point(151, 65);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dateTimePicker1.MaxDate = new System.DateTime(2027, 12, 31, 0, 0, 0, 0);
             this.dateTimePicker1.MinDate = new System.DateTime(2012, 1, 1, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(147, 21);
+            this.dateTimePicker1.Size = new System.Drawing.Size(123, 21);
             this.dateTimePicker1.TabIndex = 0;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // TxCco
             // 
-            this.TxCco.Location = new System.Drawing.Point(127, 123);
+            this.TxCco.Location = new System.Drawing.Point(151, 123);
             this.TxCco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxCco.MaxLength = 3;
             this.TxCco.Name = "TxCco";
             this.TxCco.Size = new System.Drawing.Size(58, 21);
             this.TxCco.TabIndex = 1;
@@ -287,6 +288,7 @@
             // 
             this.TxTco.Location = new System.Drawing.Point(154, 2);
             this.TxTco.Margin = new System.Windows.Forms.Padding(20, 2, 20, 2);
+            this.TxTco.MaxLength = 3;
             this.TxTco.Name = "TxTco";
             this.TxTco.Size = new System.Drawing.Size(40, 21);
             this.TxTco.TabIndex = 2;
@@ -310,6 +312,7 @@
             // 
             this.TxTw.Location = new System.Drawing.Point(485, 100);
             this.TxTw.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxTw.MaxLength = 3;
             this.TxTw.Name = "TxTw";
             this.TxTw.Size = new System.Drawing.Size(30, 21);
             this.TxTw.TabIndex = 7;
@@ -321,6 +324,7 @@
             // 
             this.TxTh.Location = new System.Drawing.Point(485, 129);
             this.TxTh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxTh.MaxLength = 3;
             this.TxTh.Name = "TxTh";
             this.TxTh.Size = new System.Drawing.Size(30, 21);
             this.TxTh.TabIndex = 8;
@@ -332,6 +336,7 @@
             // 
             this.TxTb.Location = new System.Drawing.Point(485, 42);
             this.TxTb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxTb.MaxLength = 3;
             this.TxTb.Name = "TxTb";
             this.TxTb.Size = new System.Drawing.Size(30, 21);
             this.TxTb.TabIndex = 9;
@@ -343,6 +348,7 @@
             // 
             this.TxLb.Location = new System.Drawing.Point(485, 13);
             this.TxLb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxLb.MaxLength = 3;
             this.TxLb.Name = "TxLb";
             this.TxLb.Size = new System.Drawing.Size(30, 21);
             this.TxLb.TabIndex = 10;
@@ -354,6 +360,7 @@
             // 
             this.TxTi.Location = new System.Drawing.Point(485, 158);
             this.TxTi.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxTi.MaxLength = 3;
             this.TxTi.Name = "TxTi";
             this.TxTi.Size = new System.Drawing.Size(30, 21);
             this.TxTi.TabIndex = 11;
@@ -430,6 +437,7 @@
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox2.Location = new System.Drawing.Point(567, 67);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox2.Name = "pictureBox2";
@@ -462,7 +470,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(201, 124);
+            this.checkBox1.Location = new System.Drawing.Point(234, 124);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(40, 19);
@@ -497,35 +505,37 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(14, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 15);
+            this.label1.Size = new System.Drawing.Size(131, 15);
             this.label1.TabIndex = 31;
-            this.label1.Text = "Product ID";
+            this.label1.Text = "Product ID (20 char. max)";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 15);
+            this.label2.Size = new System.Drawing.Size(135, 15);
             this.label2.TabIndex = 32;
-            this.label2.Text = "Product Lot";
+            this.label2.Text = "Product Lot (12 char. max)";
             // 
             // txProdId
             // 
-            this.txProdId.Location = new System.Drawing.Point(127, 10);
+            this.txProdId.Location = new System.Drawing.Point(151, 10);
+            this.txProdId.MaxLength = 20;
             this.txProdId.Name = "txProdId";
-            this.txProdId.Size = new System.Drawing.Size(147, 21);
+            this.txProdId.Size = new System.Drawing.Size(123, 21);
             this.txProdId.TabIndex = 33;
-            this.txProdId.Text = "Prod ID Test";
+            this.txProdId.Text = "Prod ID";
             this.txProdId.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txProdLot
             // 
-            this.txProdLot.Location = new System.Drawing.Point(127, 37);
+            this.txProdLot.Location = new System.Drawing.Point(151, 37);
+            this.txProdLot.MaxLength = 12;
             this.txProdLot.Name = "txProdLot";
-            this.txProdLot.Size = new System.Drawing.Size(147, 21);
+            this.txProdLot.Size = new System.Drawing.Size(123, 21);
             this.txProdLot.TabIndex = 34;
-            this.txProdLot.Text = "Prod Lot Test";
+            this.txProdLot.Text = "Prod Lot";
             this.txProdLot.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // label3
@@ -552,9 +562,9 @@
             "TCID50",
             "uIU/mL",
             "ug/mL"});
-            this.CBConcUnit.Location = new System.Drawing.Point(127, 93);
+            this.CBConcUnit.Location = new System.Drawing.Point(151, 93);
             this.CBConcUnit.Name = "CBConcUnit";
-            this.CBConcUnit.Size = new System.Drawing.Size(147, 23);
+            this.CBConcUnit.Size = new System.Drawing.Size(123, 23);
             this.CBConcUnit.TabIndex = 36;
             this.CBConcUnit.SelectedIndexChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -562,6 +572,7 @@
             // 
             this.TxTcoC.Location = new System.Drawing.Point(234, 2);
             this.TxTcoC.Margin = new System.Windows.Forms.Padding(20, 2, 20, 2);
+            this.TxTcoC.MaxLength = 10;
             this.TxTcoC.Name = "TxTcoC";
             this.TxTcoC.Size = new System.Drawing.Size(40, 21);
             this.TxTcoC.TabIndex = 38;
@@ -627,19 +638,23 @@
             // txT1Conc1
             // 
             this.txT1Conc1.Location = new System.Drawing.Point(5, 34);
+            this.txT1Conc1.MaxLength = 10;
             this.txT1Conc1.Name = "txT1Conc1";
             this.txT1Conc1.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc1.TabIndex = 2;
-            this.txT1Conc1.Text = "50";
+            this.txT1Conc1.Text = "10";
+            this.txT1Conc1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc1.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txT1RLU1
             // 
             this.txT1RLU1.Location = new System.Drawing.Point(5, 5);
+            this.txT1RLU1.MaxLength = 10;
             this.txT1RLU1.Name = "txT1RLU1";
             this.txT1RLU1.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU1.TabIndex = 1;
-            this.txT1RLU1.Text = "5";
+            this.txT1RLU1.Text = "10";
+            this.txT1RLU1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU1.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // RCPanel2
@@ -655,19 +670,23 @@
             // txT1Conc2
             // 
             this.txT1Conc2.Location = new System.Drawing.Point(5, 34);
+            this.txT1Conc2.MaxLength = 10;
             this.txT1Conc2.Name = "txT1Conc2";
             this.txT1Conc2.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc2.TabIndex = 2;
-            this.txT1Conc2.Text = "0";
+            this.txT1Conc2.Text = "10";
+            this.txT1Conc2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc2.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txT1RLU2
             // 
             this.txT1RLU2.Location = new System.Drawing.Point(5, 5);
+            this.txT1RLU2.MaxLength = 10;
             this.txT1RLU2.Name = "txT1RLU2";
             this.txT1RLU2.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU2.TabIndex = 1;
-            this.txT1RLU2.Text = "0";
+            this.txT1RLU2.Text = "10";
+            this.txT1RLU2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU2.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // RCPanel3
@@ -683,19 +702,23 @@
             // txT1Conc3
             // 
             this.txT1Conc3.Location = new System.Drawing.Point(5, 34);
+            this.txT1Conc3.MaxLength = 10;
             this.txT1Conc3.Name = "txT1Conc3";
             this.txT1Conc3.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc3.TabIndex = 2;
-            this.txT1Conc3.Text = "0";
+            this.txT1Conc3.Text = "10";
+            this.txT1Conc3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc3.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txT1RLU3
             // 
             this.txT1RLU3.Location = new System.Drawing.Point(5, 5);
+            this.txT1RLU3.MaxLength = 10;
             this.txT1RLU3.Name = "txT1RLU3";
             this.txT1RLU3.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU3.TabIndex = 1;
-            this.txT1RLU3.Text = "0";
+            this.txT1RLU3.Text = "10";
+            this.txT1RLU3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU3.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // RCPanel4
@@ -711,19 +734,23 @@
             // txT1Conc4
             // 
             this.txT1Conc4.Location = new System.Drawing.Point(5, 34);
+            this.txT1Conc4.MaxLength = 10;
             this.txT1Conc4.Name = "txT1Conc4";
             this.txT1Conc4.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc4.TabIndex = 2;
-            this.txT1Conc4.Text = "0";
+            this.txT1Conc4.Text = "10";
+            this.txT1Conc4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc4.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txT1RLU4
             // 
             this.txT1RLU4.Location = new System.Drawing.Point(5, 5);
+            this.txT1RLU4.MaxLength = 10;
             this.txT1RLU4.Name = "txT1RLU4";
             this.txT1RLU4.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU4.TabIndex = 1;
-            this.txT1RLU4.Text = "0";
+            this.txT1RLU4.Text = "10";
+            this.txT1RLU4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU4.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // RCPanel5
@@ -739,19 +766,23 @@
             // txT1Conc5
             // 
             this.txT1Conc5.Location = new System.Drawing.Point(5, 34);
+            this.txT1Conc5.MaxLength = 10;
             this.txT1Conc5.Name = "txT1Conc5";
             this.txT1Conc5.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc5.TabIndex = 2;
-            this.txT1Conc5.Text = "0";
+            this.txT1Conc5.Text = "10";
+            this.txT1Conc5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc5.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // txT1RLU5
             // 
             this.txT1RLU5.Location = new System.Drawing.Point(5, 5);
+            this.txT1RLU5.MaxLength = 10;
             this.txT1RLU5.Name = "txT1RLU5";
             this.txT1RLU5.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU5.TabIndex = 1;
-            this.txT1RLU5.Text = "0";
+            this.txT1RLU5.Text = "10";
+            this.txT1RLU5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU5.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
             // label7
@@ -812,6 +843,7 @@
             // 
             this.TxRb.Location = new System.Drawing.Point(485, 71);
             this.TxRb.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TxRb.MaxLength = 3;
             this.TxRb.Name = "TxRb";
             this.TxRb.Size = new System.Drawing.Size(30, 21);
             this.TxRb.TabIndex = 46;
@@ -1918,7 +1950,7 @@
             // 
             this.panel2.Controls.Add(this.flowLayoutPanel2);
             this.panel2.Controls.Add(this.flowLayoutPanel1);
-            this.panel2.Location = new System.Drawing.Point(17, 265);
+            this.panel2.Location = new System.Drawing.Point(17, 234);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(331, 102);
