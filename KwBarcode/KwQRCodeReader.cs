@@ -156,8 +156,8 @@ namespace KwBarcode
                 image = new Bitmap(
                     image,
                     new Size(
-                        (int)((double)image.Width / minLen * 512),
-                        (int)((double)image.Height / minLen * 512)
+                        (int)((double)image.Width / minLen * 256),
+                        (int)((double)image.Height / minLen * 256)
                     )
                 );
             //}
