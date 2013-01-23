@@ -156,6 +156,8 @@ namespace NuCloverBarcode
                     {
                         fRLUs[i] = float.Parse(RLUs[i].Text);
                         fConcs[i] = float.Parse(Concs[i].Text);
+                        if (fRLUs[i] < 0 || fRLUs[i] > 1000) throw new Exception();
+                        if (fConcs[i] < 0 || fConcs[i] > 1000) throw new Exception();
                     }
                     catch (Exception ex)
                     {
@@ -302,6 +304,8 @@ namespace NuCloverBarcode
                         {
                             fRLUs[i] = float.Parse(RLUs[i].Text);
                             fConcs[i] = float.Parse(Concs[i].Text);
+                            if (fRLUs[i] < 0 || fRLUs[i] > 1000) throw new Exception();
+                            if (fConcs[i] < 0 || fConcs[i] > 1000) throw new Exception();
                         }
                         catch
                         {

@@ -601,11 +601,18 @@ namespace KwBarcode
         static public ushort EncodeFloat16(double value)
         {
             int cnt = 0;
-            while (Math.Round(value * 8) < 4096 && value != 0)
+            while (value != Math.Round(value))
             {
-                value *= 8;
-                cnt++;
+                if (value * 10 >= 4095) break;
+                value *= 10;
+                cnt ++;
+                if (cnt == 15) break;
             }
+            //while (Math.Round(value * 8) < 4096 && value != 0)
+            //{
+            //    value *= 8;
+            //    cnt++;
+            //}
             return (ushort)((cnt << 12) + (int)Math.Round(value));
         }
 
@@ -615,7 +622,8 @@ namespace KwBarcode
             double result = value & 0xfff;
             while (cnt > 0)
             {
-                result /= 8;
+                result /= 10;
+                //result /= 8;
                 cnt--;
             }
             return result;

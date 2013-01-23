@@ -32,7 +32,7 @@ namespace KwBarcode
         int Size { get; set; }
         void encodeAndSave(string text, string path);
         Bitmap textToQRImage(string text);
-        void encodeAndSaveWithEC(string text, string path, int correctLev);
+        void encodeAndSaveWithEC(string text, string path, QR_CORRECT_LEV correctLev);
     }
 
     [Guid("69F37639-F632-433F-AA01-1BC326FD1D6F")]
@@ -91,7 +91,7 @@ namespace KwBarcode
             return textToQRImage(text, QR_CORRECT_LEV.L);
         }
 
-        public void encodeAndSaveWithEC(string text, string path, int correctLev)
+        public void encodeAndSaveWithEC(string text, string path, QR_CORRECT_LEV correctLev)
         {
             try
             {

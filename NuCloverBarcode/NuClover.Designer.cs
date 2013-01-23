@@ -280,7 +280,7 @@
             this.TxCco.Name = "TxCco";
             this.TxCco.Size = new System.Drawing.Size(58, 21);
             this.TxCco.TabIndex = 1;
-            this.TxCco.Text = "10";
+            this.TxCco.Text = "20";
             this.TxCco.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxCco.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -292,7 +292,7 @@
             this.TxTco.Name = "TxTco";
             this.TxTco.Size = new System.Drawing.Size(40, 21);
             this.TxTco.TabIndex = 2;
-            this.TxTco.Text = "10";
+            this.TxTco.Text = "5";
             this.TxTco.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTco.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -340,7 +340,7 @@
             this.TxTb.Name = "TxTb";
             this.TxTb.Size = new System.Drawing.Size(30, 21);
             this.TxTb.TabIndex = 9;
-            this.TxTb.Text = "100";
+            this.TxTb.Text = "105";
             this.TxTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTb.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -576,7 +576,7 @@
             this.TxTcoC.Name = "TxTcoC";
             this.TxTcoC.Size = new System.Drawing.Size(40, 21);
             this.TxTcoC.TabIndex = 38;
-            this.TxTcoC.Text = "100";
+            this.TxTcoC.Text = "10.2345";
             this.TxTcoC.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxTcoC.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -642,7 +642,7 @@
             this.txT1Conc1.Name = "txT1Conc1";
             this.txT1Conc1.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc1.TabIndex = 2;
-            this.txT1Conc1.Text = "10";
+            this.txT1Conc1.Text = "0.06789";
             this.txT1Conc1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc1.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -653,7 +653,7 @@
             this.txT1RLU1.Name = "txT1RLU1";
             this.txT1RLU1.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU1.TabIndex = 1;
-            this.txT1RLU1.Text = "10";
+            this.txT1RLU1.Text = "0.01234";
             this.txT1RLU1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU1.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -674,7 +674,7 @@
             this.txT1Conc2.Name = "txT1Conc2";
             this.txT1Conc2.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc2.TabIndex = 2;
-            this.txT1Conc2.Text = "10";
+            this.txT1Conc2.Text = "0.6789";
             this.txT1Conc2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc2.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -685,7 +685,7 @@
             this.txT1RLU2.Name = "txT1RLU2";
             this.txT1RLU2.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU2.TabIndex = 1;
-            this.txT1RLU2.Text = "10";
+            this.txT1RLU2.Text = "0.1234";
             this.txT1RLU2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU2.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -706,7 +706,7 @@
             this.txT1Conc3.Name = "txT1Conc3";
             this.txT1Conc3.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc3.TabIndex = 2;
-            this.txT1Conc3.Text = "10";
+            this.txT1Conc3.Text = "6.789";
             this.txT1Conc3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc3.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -717,7 +717,7 @@
             this.txT1RLU3.Name = "txT1RLU3";
             this.txT1RLU3.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU3.TabIndex = 1;
-            this.txT1RLU3.Text = "10";
+            this.txT1RLU3.Text = "1.234";
             this.txT1RLU3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU3.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -738,7 +738,7 @@
             this.txT1Conc4.Name = "txT1Conc4";
             this.txT1Conc4.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc4.TabIndex = 2;
-            this.txT1Conc4.Text = "10";
+            this.txT1Conc4.Text = "67.89";
             this.txT1Conc4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc4.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -749,7 +749,7 @@
             this.txT1RLU4.Name = "txT1RLU4";
             this.txT1RLU4.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU4.TabIndex = 1;
-            this.txT1RLU4.Text = "10";
+            this.txT1RLU4.Text = "12.34";
             this.txT1RLU4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU4.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -770,7 +770,7 @@
             this.txT1Conc5.Name = "txT1Conc5";
             this.txT1Conc5.Size = new System.Drawing.Size(35, 21);
             this.txT1Conc5.TabIndex = 2;
-            this.txT1Conc5.Text = "10";
+            this.txT1Conc5.Text = "678.9";
             this.txT1Conc5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1Conc5.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -781,7 +781,7 @@
             this.txT1RLU5.Name = "txT1RLU5";
             this.txT1RLU5.Size = new System.Drawing.Size(35, 21);
             this.txT1RLU5.TabIndex = 1;
-            this.txT1RLU5.Text = "10";
+            this.txT1RLU5.Text = "123.4";
             this.txT1RLU5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txT1RLU5.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -847,7 +847,7 @@
             this.TxRb.Name = "TxRb";
             this.TxRb.Size = new System.Drawing.Size(30, 21);
             this.TxRb.TabIndex = 46;
-            this.TxRb.Text = "100";
+            this.TxRb.Text = "110";
             this.TxRb.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TxRb.TextChanged += new System.EventHandler(this.generateBarcodeImage);
             // 
@@ -1812,7 +1812,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(75, 20);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Experiment";
+            this.label8.Text = "Exp. (0-1000)";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label12
