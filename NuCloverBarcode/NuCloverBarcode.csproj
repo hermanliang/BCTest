@@ -52,10 +52,19 @@
     <Compile Include="NuClover.Designer.cs">
       <DependentUpon>NuClover.cs</DependentUpon>
     </Compile>
+    <Compile Include="NuCloverDecoder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NuCloverDecoder.Designer.cs">
+      <DependentUpon>NuCloverDecoder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NuClover.resx">
       <DependentUpon>NuClover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NuCloverDecoder.resx">
+      <DependentUpon>NuCloverDecoder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,6 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="KaiwoodWeb.ico" />
+    <None Include="Resources\KwDumpB.bmp" />
+    <None Include="Resources\KwDumpA.bmp" />
+    <None Include="Resources\LotCodeB.bmp" />
+    <None Include="Resources\LotCodeA.bmp" />
+    <None Include="Resources\CasCode.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

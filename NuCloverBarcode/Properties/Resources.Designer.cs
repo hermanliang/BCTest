@@ -59,5 +59,40 @@ namespace NuCloverBarcode.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap CasCode {
+            get {
+                object obj = ResourceManager.GetObject("CasCode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap KwDumpA {
+            get {
+                object obj = ResourceManager.GetObject("KwDumpA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap KwDumpB {
+            get {
+                object obj = ResourceManager.GetObject("KwDumpB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LotCodeA {
+            get {
+                object obj = ResourceManager.GetObject("LotCodeA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LotCodeB {
+            get {
+                object obj = ResourceManager.GetObject("LotCodeB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
