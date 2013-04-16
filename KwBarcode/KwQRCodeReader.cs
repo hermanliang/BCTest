@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using com.google.zxing;
 using com.google.zxing.common;
 using com.google.zxing.qrcode;
+using com.google.zxing.oned;
 
 namespace KwBarcode
 {
@@ -34,7 +35,7 @@ namespace KwBarcode
     [ProgId("KwQRCodeReader")]
     public class KwQRCodeReader : IQRReader
     {
-        private QRCodeReader reader;
+        private Code128Reader reader;
         private string filePath = "";
         private string text = "";
         private int counter = 0;
@@ -42,7 +43,7 @@ namespace KwBarcode
 
         public KwQRCodeReader()
         {
-            reader = new QRCodeReader();
+            reader = new Code128Reader();
         }
 
         public string FilePath
@@ -113,7 +114,7 @@ namespace KwBarcode
         
         private Result ProcessQRReader(Bitmap image)
         {
-            image = preProcessImage(image);
+            //image = preProcessImage(image);
             //image = new Bitmap("d:\\AMA_QR.bmp");
             LuminanceSource ls = new RGBLuminanceSource(image, image.Width, image.Height);
             Binarizer hb = new HybridBinarizer(ls);
