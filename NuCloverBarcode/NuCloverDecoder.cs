@@ -18,9 +18,9 @@ namespace NuCloverBarcode
 
         private void NuCloverDecoder_Load(object sender, EventArgs e)
         {
-            Bitmap casImg = Properties.Resources.CasCode;
-            Bitmap lotImg1 = Properties.Resources.KwDumpA;
-            Bitmap lotImg2 = Properties.Resources.KwDumpB;
+            Bitmap casImg = Properties.Resources.CasCode2;
+            Bitmap lotImg1 = Properties.Resources.chs1;
+            Bitmap lotImg2 = Properties.Resources.chs2;
             KwQRCodeReader reader = new KwQRCodeReader();
             reader.decode(casImg);
             String casMsg = reader.Text;
@@ -54,7 +54,7 @@ namespace NuCloverBarcode
             String fieldValue = getFieldText(lotMsg, "60");
             String[] prodHexArr = getHexArray(fieldValue, null);
             byte[] prodByteArr = hex2byteArr(prodHexArr);
-            Encoding encoder = Encoding.Default;
+            Encoding encoder = Encoding.GetEncoding("gb2312");
             String prodCode = encoder.GetString(prodByteArr);
             
             lotMsg = lotMsg.Substring(fieldValue.Length + 2);

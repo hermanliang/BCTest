@@ -14,7 +14,7 @@ namespace NuCloverBarcode
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new NuClover());
+            Application.Run(new NuCloverDecoder());
         }
     }
 }

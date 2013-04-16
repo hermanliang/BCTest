@@ -95,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="KaiwoodWeb.ico" />
+    <None Include="Resources\chs2.png" />
+    <None Include="Resources\chs1.png" />
+    <None Include="Resources\CasCode2.bmp" />
     <None Include="Resources\KwDumpB.bmp" />
     <None Include="Resources\KwDumpA.bmp" />
     <None Include="Resources\LotCodeB.bmp" />
