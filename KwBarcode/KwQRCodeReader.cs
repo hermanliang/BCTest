@@ -72,6 +72,8 @@ namespace KwBarcode
 
         public void decode(Bitmap image)
         {
+            text = "";
+            rawByte = null;
             try
             {
                 Result result = ProcessQRReader(image);
