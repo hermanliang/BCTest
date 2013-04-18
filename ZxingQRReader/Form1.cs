@@ -16,7 +16,7 @@ namespace ZxingQRReader
     public partial class Form1 : Form
     {
         private int counter = 0;
-        KwQRCodeReader reader = new KwQRCodeReader();
+        KwCode128Reader reader = new KwCode128Reader();
         KwQRCodeWriter writer = new KwQRCodeWriter();
 
         public Form1()

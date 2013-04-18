@@ -14,35 +14,21 @@ using System.Runtime.InteropServices;
 using com.google.zxing;
 using com.google.zxing.common;
 using com.google.zxing.qrcode;
+using com.google.zxing.oned;
 
 namespace KwBarcode
-{
-    [Guid("90A019A1-D080-4331-B20F-AD4504236398")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
-    public interface IQRReader
+{   
+    public class KwCode128Reader
     {
-        string FilePath { get; set; }
-        byte[] RawByte { get; }
-        string Text { get; }
-        void decode();
-        void decode(Bitmap image);
-    }
-
-
-    [Guid("3E73EE86-F46D-411D-BE6F-87060B7E6E6A")]
-    [ClassInterface(ClassInterfaceType.None)]
-    [ProgId("KwQRCodeReader")]
-    public class KwQRCodeReader : IQRReader
-    {
-        private QRCodeReader reader;
+        private Code128Reader reader;
         private string filePath = "";
         private string text = "";
         private int counter = 0;
         byte[] rawByte = null;
 
-        public KwQRCodeReader()
+        public KwCode128Reader()
         {
-            reader = new QRCodeReader();
+            reader = new Code128Reader();
         }
 
         public string FilePath
