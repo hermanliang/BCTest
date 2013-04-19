@@ -89,6 +89,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'COM|AnyCPU'">
+    <OutputPath>bin\COM\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
