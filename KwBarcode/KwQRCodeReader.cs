@@ -113,7 +113,7 @@ namespace KwBarcode
         
         private Result ProcessQRReader(Bitmap image)
         {
-            //image = preProcessImage(image);
+            image = preProcessImage(image);
             //image = new Bitmap("d:\\AMA_QR.bmp");
             LuminanceSource ls = new RGBLuminanceSource(image, image.Width, image.Height);
             Binarizer hb = new HybridBinarizer(ls);

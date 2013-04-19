@@ -17,8 +17,22 @@ using com.google.zxing.qrcode;
 using com.google.zxing.oned;
 
 namespace KwBarcode
-{   
-    public class KwCode128Reader
+{
+    [Guid("1CB48AF5-FFB5-4E69-98A5-9D6D12E37331")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
+    public interface IBarcodeReader
+    {
+        string FilePath { get; set; }
+        byte[] RawByte { get; }
+        string Text { get; }
+        void decode();
+        void decode(Bitmap image);
+    }
+
+    [Guid("3B1FBA5D-32BB-4E30-AB5A-769C323C3157")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ProgId("KwBarcodeReader")]
+    public class KwCode128Reader:IBarcodeReader
     {
         private Code128Reader reader;
         private string filePath = "";
