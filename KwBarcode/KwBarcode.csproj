@@ -34,7 +34,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GlobalDll|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\..\..\..\GlobalDll\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <RegisterForComInterop>true</RegisterForComInterop>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
