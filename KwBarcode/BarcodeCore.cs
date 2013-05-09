@@ -629,6 +629,13 @@ namespace KwBarcode
             return result;
         }
 
+        static public int bytes2Uint16(byte[] dataBytes, int startIndex)
+        {
+            int retValue = 0;
+            retValue = retValue | (dataBytes[startIndex] & 0xff) | ((dataBytes[startIndex + 1] << 8) & 0xff00);
+            return retValue;
+        }
+
         #endregion
     }
 }
