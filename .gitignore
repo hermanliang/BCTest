@@ -29,3 +29,4 @@ _ReSharper*/
 $tf*/
 *.vbw
 barcode*.7z
+zxingLib/zxing.dll
