@@ -63,7 +63,7 @@
     </Reference>
     <Reference Include="zxing, Version=1.0.4896.31007, Culture=neutral, PublicKeyToken=1ae9e675a4cd0779, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\zxing.dll</HintPath>
+      <HintPath>lib\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -76,9 +76,7 @@
     <None Include="kwKey.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="zxing.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="lib\zxing.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
