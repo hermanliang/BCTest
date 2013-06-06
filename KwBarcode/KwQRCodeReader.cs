@@ -128,7 +128,7 @@ namespace KwBarcode
                 Console.WriteLine(rex.Message);
                 if (counter == 0)
                 {
-                    image = paddingImage(image, 10);
+                    image = paddingImage(image, 20);
                     counter = 1;
                     return ProcessQRReader(image);
                 }
